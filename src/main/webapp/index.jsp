@@ -8,7 +8,7 @@
 <% Logger logger=Logger.getLogger(this.getClass().getName());%>
 
 <c:forEach var="counter" begin="1" end="10" step="1" >
-   <c:set var="myCount" value="${counter-5}" />
+   <c:set var="myCount" value="${counter-50}" />
    <c:out value="${myCount}"/></br>
    <% String message = "counter="
                   + pageContext.findAttribute("counter")
