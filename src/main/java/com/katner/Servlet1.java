@@ -1,5 +1,8 @@
 package com.katner;
 
+import com.katner.model.AutorEntity;
+import com.katner.model.AutorzyEntity;
+import com.katner.model.KsiazkaEntity;
 import com.katner.model.PenguinsEntity;
 
 import javax.persistence.EntityManager;
@@ -27,13 +30,23 @@ public class Servlet1 extends HttpServlet {
 
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
         EntityManager manager = factory.createEntityManager();
-        List<PenguinsEntity> penguinsEntityList = manager.createQuery("select e from PenguinsEntity e").getResultList();
+        List<KsiazkaEntity> penguinsEntityList = manager.createQuery("select e from KsiazkaEntity e").getResultList();
         PrintWriter writer = response.getWriter();
+
         writer.write("Witam pana");
-        for (PenguinsEntity penguin : penguinsEntityList)
+        for (KsiazkaEntity penguin : penguinsEntityList)
         {
             writer.write("\n");
-            writer.write(penguin.getMyval());
+            writer.write(penguin.getTytul() + "  -  ");
+            List<AutorEntity> autorEntities = manager.createQuery("select distinct A from AutorEntity A, AutorzyEntity B, KsiazkaEntity C where A.idAutor = B.autorIdAutor and B.ksiazkaIdKsiazka =" + penguin.getIdKsiazka()).getResultList();
+            if (autorEntities.size() > 0) {
+                AutorEntity tmp = autorEntities.get(0);
+                writer.write(autorEntities.get(0).getNazwisko());
+            } else
+            {
+                writer.write("Autor nieznany");
+            }
+            writer.write("\n");
         }
     }
 }
