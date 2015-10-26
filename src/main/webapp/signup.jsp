@@ -99,6 +99,15 @@
                     </div>
                 </div>
 
+                <div class="form-group has-feedback">
+                    <label for="email" class="control-label col-md-2">Email</label>
+
+                    <div class="col-md-6">
+                        <input type="text" name="haslo" id="email" class="form-control" placeholder="Email"/>
+                        <span class="glyphicon form-control-feedback" id="email"></span>
+                    </div>
+                </div>
+
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary pull-right">Rejestracja</button>
                 </div>

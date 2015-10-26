@@ -29,10 +29,13 @@ public class SignUpServlet extends HttpServlet {
             czytelnikEntity.setNazwisko(request.getParameter("nazwisko"));
             czytelnikEntity.setLogin(request.getParameter("login"));
             czytelnikEntity.setHaslo(request.getParameter("haslo"));
+            czytelnikEntity.setEmail(request.getParameter("email"));
             entityManager.getTransaction().begin();
             entityManager.persist(czytelnikEntity);
             entityManager.getTransaction().commit();
             entityManager.close();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+            dispatcher.forward(request, response);
         } else {
             request.setAttribute("signupsuccessfull", false);
             RequestDispatcher dispatcher = request.getRequestDispatcher("signup.jsp");
