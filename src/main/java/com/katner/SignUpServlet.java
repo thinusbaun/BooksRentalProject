@@ -34,7 +34,9 @@ public class SignUpServlet extends HttpServlet {
             entityManager.getTransaction().commit();
             entityManager.close();
         } else {
-            response.sendError(444);
+            request.setAttribute("signupsuccessfull", false);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("signup.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
