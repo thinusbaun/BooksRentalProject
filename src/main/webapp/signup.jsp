@@ -105,7 +105,7 @@
                     <label for="emailInput" class="control-label col-md-2">Email</label>
 
                     <div class="col-md-6">
-                        <input type="text" name="haslo" id="emailInput" class="form-control" placeholder="Email"/>
+                        <input type="text" name="email" id="emailInput" class="form-control" placeholder="Email"/>
                         <span class="glyphicon form-control-feedback" id="email"></span>
                         <span class="hidden" id="emailEmpty">Email nie może być pusty.</span>
                         <span class="hidden" id="emailTooLong">Email zbyt długi.</span>
