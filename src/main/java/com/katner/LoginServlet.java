@@ -2,6 +2,7 @@ package com.katner;
 
 
 import com.katner.model.AuthUserEntity;
+import com.katner.util.Hasher;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,9 +28,9 @@ public class LoginServlet extends HttpServlet {
         List<AuthUserEntity> results = entityManager.createQuery("SELECT t FROM AuthUserEntity t where t.username = :username")
                 .setParameter("username", request.getParameter("login")).getResultList();
         if (results.size() != 0) {
-            AuthUserEntity czytelnikEntity = (AuthUserEntity) results.get(0);
-            if (czytelnikEntity.getPassword().equals(request.getParameter("haslo"))) { //TODO: Hashowanie hasła
-                Cookie cookie = new Cookie("imie", czytelnikEntity.getFirstName());
+            AuthUserEntity userEntity = (AuthUserEntity) results.get(0);
+            if (Hasher.checkPassword(request.getParameter("haslo"), userEntity.getPassword())) {
+                Cookie cookie = new Cookie("imie", userEntity.getFirstName());
                 cookie.setPath("/");
                 cookie.setMaxAge(9000);
                 response.addCookie(cookie);

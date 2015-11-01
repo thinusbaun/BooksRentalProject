@@ -1,6 +1,7 @@
 package com.katner;
 
 import com.katner.model.AuthUserEntity;
+import com.katner.util.Hasher;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -23,16 +26,17 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
         EntityManager entityManager = factory.createEntityManager();
-        List<AuthUserEntity> entries = entityManager.createQuery("Select a from AuthUserEntity a where a.username = :login").setParameter("username", request.getParameter("login")).getResultList();
+        List<AuthUserEntity> entries = entityManager.createQuery("Select a from AuthUserEntity a where a.username = :username").setParameter("username", request.getParameter("login")).getResultList();
         if (entries.size() == 0) {
-            AuthUserEntity czytelnikEntity = new AuthUserEntity();
-            czytelnikEntity.setFirstName(request.getParameter("imie"));
-            czytelnikEntity.setLastName(request.getParameter("nazwisko"));
-            czytelnikEntity.setUsername(request.getParameter("login"));
-            czytelnikEntity.setPassword(request.getParameter("haslo")); //TODO: Hashowanie hasła
-            czytelnikEntity.setEmail(request.getParameter("email"));
+            AuthUserEntity userEntity = new AuthUserEntity();
+            userEntity.setFirstName(request.getParameter("imie"));
+            userEntity.setLastName(request.getParameter("nazwisko"));
+            userEntity.setUsername(request.getParameter("login"));
+            userEntity.setPassword(Hasher.encode(request.getParameter("haslo")));
+            userEntity.setEmail(request.getParameter("email"));
+            userEntity.setDateJoined(new Timestamp(Calendar.getInstance().getTime().getTime()));
             entityManager.getTransaction().begin();
-            entityManager.persist(czytelnikEntity);
+            entityManager.persist(userEntity);
             entityManager.getTransaction().commit();
             entityManager.close();
             Cookie cookie = new Cookie("imie", request.getParameter("imie"));
