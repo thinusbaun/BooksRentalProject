@@ -3,15 +3,27 @@
 
     <persistence-unit name="NewPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>com.katner.model.PenguinsEntity</class>
-        <class>com.katner.model.AutorEntity</class>
-        <class>com.katner.model.AutorzyEntity</class>
-        <class>com.katner.model.CzytelnikEntity</class>
-        <class>com.katner.model.EgzemplarzKsiazkiEntity</class>
-        <class>com.katner.model.KsiazkaEntity</class>
-        <class>com.katner.model.WypozyczenieEntity</class>
+        <class>com.katner.model.AdminMessageEntity</class>
+        <class>com.katner.model.AuthGroupEntity</class>
+        <class>com.katner.model.AuthGroupPermissionsEntity</class>
+        <class>com.katner.model.AuthPermissionEntity</class>
+        <class>com.katner.model.AuthUserEntity</class>
+        <class>com.katner.model.AuthUserGroupsEntity</class>
+        <class>com.katner.model.AuthUserUserPermissionsEntity</class>
+        <class>com.katner.model.AuthorEntity</class>
+        <class>com.katner.model.BookEntity</class>
+        <class>com.katner.model.BookCopyEntity</class>
+        <class>com.katner.model.BookAuthorsEntity</class>
+        <class>com.katner.model.BookTagsEntity</class>
+        <class>com.katner.model.DjangoAdminLogEntity</class>
+        <class>com.katner.model.DjangoContentTypeEntity</class>
+        <class>com.katner.model.DjangoMigrationsEntity</class>
+        <class>com.katner.model.DjangoSessionEntity</class>
+        <class>com.katner.model.RentalEntity</class>
+        <class>com.katner.model.SearchEntryEntity</class>
+        <class>com.katner.model.TagEntity</class>
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/wypozyczalnia"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value="kernel"/>

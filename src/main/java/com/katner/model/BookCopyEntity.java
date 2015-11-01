@@ -3,13 +3,13 @@ package com.katner.model;
 import javax.persistence.*;
 
 /**
- * Created by michal on 24.10.15.
+ * Created by michal on 01.11.15.
  */
 @Entity
-@Table(name = "penguins", schema = "", catalog = "test")
-public class PenguinsEntity {
+@Table(name = "bookCopy", schema = "", catalog = "wypozyczalnia")
+public class BookCopyEntity {
     private int id;
-    private String myval;
+    private int bookId;
 
     @Id
     @Column(name = "id")
@@ -22,13 +22,13 @@ public class PenguinsEntity {
     }
 
     @Basic
-    @Column(name = "myval")
-    public String getMyval() {
-        return myval;
+    @Column(name = "bookId")
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setMyval(String myval) {
-        this.myval = myval;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     @Override
@@ -36,10 +36,10 @@ public class PenguinsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PenguinsEntity that = (PenguinsEntity) o;
+        BookCopyEntity that = (BookCopyEntity) o;
 
         if (id != that.id) return false;
-        if (myval != null ? !myval.equals(that.myval) : that.myval != null) return false;
+        if (bookId != that.bookId) return false;
 
         return true;
     }
@@ -47,7 +47,7 @@ public class PenguinsEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (myval != null ? myval.hashCode() : 0);
+        result = 31 * result + bookId;
         return result;
     }
 }
