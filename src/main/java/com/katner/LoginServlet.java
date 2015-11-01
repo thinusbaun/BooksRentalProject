@@ -1,7 +1,7 @@
 package com.katner;
 
 
-import com.katner.model.CzytelnikEntity;
+import com.katner.model.AuthUserEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,12 +24,12 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
         EntityManager entityManager = factory.createEntityManager();
-        List<CzytelnikEntity> results = entityManager.createQuery("SELECT t FROM CzytelnikEntity t where t.login = :login")
-                .setParameter("login", request.getParameter("login")).getResultList();
+        List<AuthUserEntity> results = entityManager.createQuery("SELECT t FROM AuthUserEntity t where t.username = :username")
+                .setParameter("username", request.getParameter("login")).getResultList();
         if (results.size() != 0) {
-            CzytelnikEntity czytelnikEntity = (CzytelnikEntity) results.get(0);
-            if (czytelnikEntity.getHaslo().equals(request.getParameter("haslo"))) {
-                Cookie cookie = new Cookie("imie", czytelnikEntity.getImie());
+            AuthUserEntity czytelnikEntity = (AuthUserEntity) results.get(0);
+            if (czytelnikEntity.getPassword().equals(request.getParameter("haslo"))) { //TODO: Hashowanie hasła
+                Cookie cookie = new Cookie("imie", czytelnikEntity.getFirstName());
                 cookie.setPath("/");
                 cookie.setMaxAge(9000);
                 response.addCookie(cookie);

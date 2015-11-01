@@ -1,6 +1,6 @@
 package com.katner;
 
-import com.katner.model.CzytelnikEntity;
+import com.katner.model.AuthUserEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,13 +23,13 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
         EntityManager entityManager = factory.createEntityManager();
-        List<CzytelnikEntity> entries = entityManager.createQuery("Select a from CzytelnikEntity a where a.login = :login").setParameter("login", request.getParameter("login")).getResultList();
+        List<AuthUserEntity> entries = entityManager.createQuery("Select a from AuthUserEntity a where a.username = :login").setParameter("username", request.getParameter("login")).getResultList();
         if (entries.size() == 0) {
-            CzytelnikEntity czytelnikEntity = new CzytelnikEntity();
-            czytelnikEntity.setImie(request.getParameter("imie"));
-            czytelnikEntity.setNazwisko(request.getParameter("nazwisko"));
-            czytelnikEntity.setLogin(request.getParameter("login"));
-            czytelnikEntity.setHaslo(request.getParameter("haslo"));
+            AuthUserEntity czytelnikEntity = new AuthUserEntity();
+            czytelnikEntity.setFirstName(request.getParameter("imie"));
+            czytelnikEntity.setLastName(request.getParameter("nazwisko"));
+            czytelnikEntity.setUsername(request.getParameter("login"));
+            czytelnikEntity.setPassword(request.getParameter("haslo")); //TODO: Hashowanie hasła
             czytelnikEntity.setEmail(request.getParameter("email"));
             entityManager.getTransaction().begin();
             entityManager.persist(czytelnikEntity);
@@ -56,4 +56,5 @@ public class SignUpServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("signup.jsp");
         dispatcher.forward(request, response);
     }
+
 }
