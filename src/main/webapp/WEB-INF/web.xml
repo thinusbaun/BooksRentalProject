@@ -4,15 +4,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
-        <servlet-name>Servlet1</servlet-name>
-        <servlet-class>com.katner.Servlet1</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Servlet1</servlet-name>
-        <url-pattern>/servlet</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>SignUpServlet</servlet-name>
         <servlet-class>com.katner.SignUpServlet</servlet-class>
     </servlet>
