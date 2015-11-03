@@ -9,10 +9,10 @@ import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,25 +23,26 @@ import java.util.List;
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager entityManager = EntityManagerHelper.getEntityManager();
+        HttpSession session = request.getSession();
         List<AuthUserEntity> results = entityManager.createQuery("SELECT t FROM AuthUserEntity t where t.username = :username")
                 .setParameter("username", request.getParameter("login")).getResultList();
         if (results.size() != 0) {
             AuthUserEntity userEntity = (AuthUserEntity) results.get(0);
             if (Hasher.checkPassword(request.getParameter("haslo"), userEntity.getPassword())) {
-                Cookie cookie = new Cookie("imie", userEntity.getFirstName());
-                cookie.setPath("/");
-                cookie.setMaxAge(9000);
-                response.addCookie(cookie);
-                cookie = new Cookie("login", request.getParameter("login"));
-                cookie.setPath("/");
-                cookie.setMaxAge(9000);
-                response.addCookie(cookie);
+                session.setAttribute("imie", userEntity.getFirstName());
+                session.setAttribute("login", userEntity.getUsername());
+                session.setAttribute("user", userEntity);
                 response.sendRedirect("/");
 
             } else {
+                session.setAttribute("message", "Złe hasło.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
                 dispatcher.forward(request, response);
             }
+        } else {
+            session.setAttribute("message", "Podany użytkownik nie istnieje.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
         }
 
     }

@@ -29,6 +29,12 @@
     <%@include file="WEB-INF/jspf/navigation-bar.jspf" %>
     <div class="container">
         <div class="jumbotron">
+            <c:if test="${not empty message }">
+                <div class="alert alert-warning fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <%=session.getAttribute("message")%>
+                </div>
+            </c:if>
             <form id="signupform" method="post" class="form-horizontal">
                 <div class="form-group has-feedback" id="logindiv">
                     <label for="loginInput" class="control-label col-md-2">Login</label>
