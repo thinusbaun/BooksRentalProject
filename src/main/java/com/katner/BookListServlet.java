@@ -2,10 +2,9 @@ package com.katner;
 
 import com.katner.model.BookEntity;
 import com.katner.model.TagEntity;
+import com.katner.util.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +25,7 @@ public class BookListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
-        EntityManager entityManager = factory.createEntityManager();
+        EntityManager entityManager = EntityManagerHelper.getEntityManager();
         List<BookEntity> books = entityManager.createQuery("from BookEntity").getResultList();
         out.write("<ul class=\"list-group\">");
         for (BookEntity book : books) {

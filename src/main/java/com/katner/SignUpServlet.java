@@ -1,11 +1,10 @@
 package com.katner;
 
 import com.katner.model.AuthUserEntity;
+import com.katner.util.EntityManagerHelper;
 import com.katner.util.Hasher;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +23,7 @@ import java.util.List;
 @WebServlet(name = "SignUpServlet")
 public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
-        EntityManager entityManager = factory.createEntityManager();
+        EntityManager entityManager = EntityManagerHelper.getEntityManager();
         List<AuthUserEntity> entries = entityManager.createQuery("Select a from AuthUserEntity a where a.username = :username").setParameter("username", request.getParameter("login")).getResultList();
         if (entries.size() == 0) {
             AuthUserEntity userEntity = new AuthUserEntity();
