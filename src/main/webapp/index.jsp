@@ -24,48 +24,7 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-
-
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                        aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Wypożyczalnia książek</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#books">Książki</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <%
-                        String userFirstName = null;
-                        Cookie[] cookies = request.getCookies();
-                        if (cookies != null) {
-                            for (Cookie cookie : cookies) {
-                                if (cookie.getName().equals("imie")) userFirstName = cookie.getValue();
-                            }
-                        }
-                        if (userFirstName == null) {
-                            out.write("<li><a href=\"http://localhost:8080/signup\"><span class=\"glyphicon glyphicon-user\"></span> Rejestracja</a></li>");
-                            out.write("<li><a href=\"http://localhost:8080/login\"><span class=\"glyphicon glyphicon-log-in\"></span> Logowanie</a></li>");
-                        } else {
-                            out.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + userFirstName + "</a></li>");
-                            out.write("<li><a href=\"http://localhost:8080/logout\"><span class=\"glyphicon glyphicon-log-out\"></span> Wyloguj</a></li>");
-                        }
-                    %>
-
-                </ul>
-            </div>
-
-        </div>
-
-    </nav>
+    <%@include file="WEB-INF/jspf/navigation-bar.jspf" %>
     <div class="container">
         <div class="jumbotron">
             <h1>Wypożyczalnia książek</h1>
