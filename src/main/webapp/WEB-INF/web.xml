@@ -29,7 +29,34 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookListServlet</servlet-name>
+        <servlet-class>com.katner.BookListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookListServlet</servlet-name>
+        <url-pattern>/bookList</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>PageSkeletonFilter</filter-name>
+        <filter-class>com.katner.PageSkeletonFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PageSkeletonFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>
