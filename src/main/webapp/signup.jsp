@@ -22,11 +22,11 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
 </head>
 <body data-signupsuccessfull="${signupsuccessfull}">
 <div class="container">
     <%@include file="WEB-INF/jspf/navigation-bar.jspf" %>
+    <%@include file="WEB-INF/jspf/admin-messages.jspf" %>
     <div class="container">
         <div class="jumbotron">
             <form id="signupform" method="post" class="form-horizontal">

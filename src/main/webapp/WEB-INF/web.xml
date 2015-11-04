@@ -39,6 +39,15 @@
         <url-pattern>/bookList</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminMessagesServlet</servlet-name>
+        <servlet-class>com.katner.AdminMessagesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminMessagesServlet</servlet-name>
+        <url-pattern>/listAdminMessages</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

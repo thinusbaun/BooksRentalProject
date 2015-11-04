@@ -1,0 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/listAdminMessages"></jsp:include>
+<c:if test="${not empty messages}">
+    <c:forEach items="${messages}" var="message">
+        <div class="alert alert-info fade in">${message.getContent()}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close"
+               id="close-alert-${message.getId()}">&times;</a></div>
+    </c:forEach>
+</c:if>
+<script src="js/close-admin-message.js"></script>

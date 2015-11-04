@@ -25,6 +25,7 @@
 <body>
 <div class="container">
     <%@include file="WEB-INF/jspf/navigation-bar.jspf" %>
+    <%@include file="WEB-INF/jspf/admin-messages.jspf" %>
     <div class="container">
         <c:if test="${empty user}">
         <div class="jumbotron">

@@ -27,6 +27,7 @@
 <body data-signupsuccessfull="${signupsuccessfull}">
 <div class="container">
     <%@include file="WEB-INF/jspf/navigation-bar.jspf" %>
+    <%@include file="WEB-INF/jspf/admin-messages.jspf" %>
     <div class="container">
         <div class="jumbotron">
             <c:if test="${not empty message }">
