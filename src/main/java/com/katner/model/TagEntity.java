@@ -1,15 +1,26 @@
 package com.katner.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 08.11.15.
  */
 @Entity
-@Table(name = "tag", schema = "", catalog = "wypozyczalnia")
+@Table(name = "tag", schema = "wypozyczalnia", catalog = "")
 public class TagEntity {
+    private List<BookEntity> books;
     private int id;
     private String title;
+
+    @ManyToMany(mappedBy = "tags")
+    public List<BookEntity> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookEntity> books) {
+        this.books = books;
+    }
 
     @Id
     @Column(name = "id")

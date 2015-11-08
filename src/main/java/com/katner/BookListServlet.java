@@ -1,7 +1,6 @@
 package com.katner;
 
 import com.katner.model.BookEntity;
-import com.katner.model.TagEntity;
 import com.katner.util.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
@@ -27,20 +26,6 @@ public class BookListServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         EntityManager entityManager = EntityManagerHelper.getEntityManager();
         List<BookEntity> books = entityManager.createQuery("from BookEntity").getResultList();
-        out.write("<ul class=\"list-group\">");
-        for (BookEntity book : books) {
-            out.write("<li class=\"list-group-item\">");
-            out.write(book.getTitle());
-            out.write("<br/>");
-            out.write(book.getIsbn());
-
-            List<TagEntity> tags = entityManager.createQuery("select t from BookTagsEntity bt, TagEntity t where t.id = bt.tagId and bt.bookId = :bookId").setParameter("bookId", book.getId()).getResultList();
-            for (TagEntity tag : tags) {
-                out.write(tag.getTitle());
-                out.write("<br/>");
-            }
-            out.write("</li>");
-        }
-        out.write("</ul>");
+        request.setAttribute("books", books);
     }
 }

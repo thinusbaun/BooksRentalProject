@@ -1,16 +1,39 @@
 package com.katner.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 08.11.15.
  */
 @Entity
-@Table(name = "book", schema = "", catalog = "wypozyczalnia")
+@Table(name = "book", schema = "wypozyczalnia", catalog = "")
 public class BookEntity {
+    private List<AuthorEntity> authors;
+    private List<TagEntity> tags;
     private int id;
     private String title;
     private String isbn;
+
+    @ManyToMany
+    @JoinTable(name = "book_authors", catalog = "", schema = "wypozyczalnia", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false))
+    public List<AuthorEntity> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<AuthorEntity> authors) {
+        this.authors = authors;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "book_tags", catalog = "", schema = "wypozyczalnia", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id", nullable = false))
+    public List<TagEntity> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagEntity> tags) {
+        this.tags = tags;
+    }
 
     @Id
     @Column(name = "id")
