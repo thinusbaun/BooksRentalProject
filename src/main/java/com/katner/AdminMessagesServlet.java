@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -35,6 +36,13 @@ public class AdminMessagesServlet extends HttpServlet {
         }
         String newMessageContent = request.getParameter("newMessageContent");
         if (newMessageContent != null) {
+            EntityManager em = EntityManagerHelper.getEntityManager();
+            AdminMessageEntity entity = new AdminMessageEntity();
+            entity.setContent(newMessageContent);
+            entity.setDate(new Date(new java.util.Date().getTime()));
+            em.getTransaction().begin();
+            em.persist(entity);
+            em.getTransaction().commit();
             return;
         }
         String closeMessageIdString = request.getParameter("closeMessageId");

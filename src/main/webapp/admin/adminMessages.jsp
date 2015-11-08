@@ -22,6 +22,23 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="<c:url value="/js/delete-admin-message.js"/>"></script>
+    <script src="<c:url value="/js/bootstrap-wysywig.js"/>"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#newMessageButton').click(function () {
+                $('#newMessageDiv').toggleClass("hidden");
+            })
+            $('#sendNewMessage').click(function () {
+                var editor = $('#editor');
+                $.post("/listAdminMessages", {'newMessageContent': editor.text()}).done(function () {
+                    location.reload();
+                });
+                editor.text("Tutaj wpisz treść komunikatu");
+                $('#newMessageDiv').toggleClass("hidden");
+            })
+        })
+    </script>
 </head>
 <body>
 <div class="container">
@@ -31,6 +48,7 @@
         <%--<c:if test="${user.isSuperuser eq 1}">--%>
         <div class="jumbotron">
             <h2>Komunikaty administratora</h2>
+
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -45,7 +63,7 @@
                 <tr id="${message.getId()}-row">
                     <td>${message.getContent()}</td>
                     <td>
-                        <a class="removeMessage" id="${message.getId()}">Usuń</a>
+                        <a class="removeMessage btn btn-primary pull-right" id="${message.getId()}">Usuń</a>
         </div>
         </td>
         </tr>
@@ -55,6 +73,12 @@
 
         </tbody>
         </table>
+        <a class="btn btn-primary" id="newMessageButton">Nowy komunikat</a>
+
+        <div id="newMessageDiv" class="hidden">
+            <div id="editor" contenteditable="true">Tutaj wpisz treść komunikatu</div>
+            <a class="btn btn-primary" id="sendNewMessage">Wyślij</a>
+        </div>
 
     </div>
     <%--</c:if>--%>
