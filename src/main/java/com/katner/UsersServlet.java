@@ -64,6 +64,17 @@ public class UsersServlet extends HttpServlet {
             em.getTransaction().commit();
             return;
         }
+        String shouldDeleteUser = request.getParameter("deleteUser");
+        if (shouldDeleteUser != null) {
+            AuthUserEntity entity = new AuthUserEntity();
+            entity.setId(Integer.parseInt(id));
+            EntityManager em = EntityManagerHelper.getEntityManager();
+            em.getTransaction().begin();
+            em.remove(em.merge(entity));
+            em.getTransaction().commit();
+            em.close();
+            return;
+        }
 
     }
 

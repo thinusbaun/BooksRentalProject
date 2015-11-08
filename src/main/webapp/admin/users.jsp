@@ -42,6 +42,12 @@
                     $.post("/listUsers", {"userId": id, "setIsActive": event.target.checked});
                 })
             })
+            $("a[id*='delete").each(function (i, el) {
+                $(el).click(function (event) {
+                    var id = event.target.id.split("-")[0];
+                    $.post("/listUsers", {"userId": id, "deleteUser": "true"});
+                })
+            })
         })
     </script>
 
@@ -65,6 +71,7 @@
                     <th>Pracownik</th>
                     <th>Administrator</th>
                     <th>Zatwierdzony</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,6 +89,8 @@
                                        <c:if test="${user.getIsSuperuser() eq 1}">checked="checked"</c:if>></td>
                             <td><input type="checkbox" id="${user.getId()}-active"
                                        <c:if test="${user.getIsActive() eq 1}">checked="checked"</c:if>></td>
+                            <td><a class="deleteUser btn btn-primary pull-right" id="${user.getId()}-delete">Usuń</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </c:if>
