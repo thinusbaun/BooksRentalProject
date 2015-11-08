@@ -7,4 +7,4 @@
                id="close-alert-${message.getId()}">&times;</a></div>
     </c:forEach>
 </c:if>
-<script src="js/close-admin-message.js"></script>
+<script src="<c:url value="/js/close-admin-message.js"/>"></script>

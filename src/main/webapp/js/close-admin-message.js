@@ -4,6 +4,6 @@
 $(document).ready(function () {
     $('a.close').click(function (event) {
         var id = event.target.id.split('-')[event.target.id.split('-').length - 1];
-        $.post("/listAdminMessages", id.toString());
+        $.post("/listAdminMessages", {'closeMessageId': id});
     });
 });

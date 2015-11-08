@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,17 +21,33 @@ import java.util.List;
 @WebServlet(name = "AdminMessagesServlet")
 public class AdminMessagesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BufferedReader reader = request.getReader();
-        String tmp = reader.readLine();
-        Integer closedMessageId = Integer.parseInt(tmp);
-        HttpSession session = request.getSession();
-        ArrayList<Integer> closedMessages = (ArrayList<Integer>) session.getAttribute("closedMessages");
-        if (closedMessages == null) {
-            closedMessages = new ArrayList<Integer>();
+        String deleteMessageIdString = request.getParameter("deleteMessageId");
+        if (deleteMessageIdString != null) {
+            Integer id = Integer.parseInt(deleteMessageIdString);
+            AdminMessageEntity entity = new AdminMessageEntity();
+            entity.setId(id);
+            EntityManager em = EntityManagerHelper.getEntityManager();
+            em.getTransaction().begin();
+            em.remove(em.merge(entity));
+            em.getTransaction().commit();
+            em.close();
+            return;
         }
+        String newMessageContent = request.getParameter("newMessageContent");
+        if (newMessageContent != null) {
+            return;
+        }
+        String closeMessageIdString = request.getParameter("closeMessageId");
+        if (closeMessageIdString != null) {
+            Integer closedMessageId = Integer.parseInt(closeMessageIdString);
+            HttpSession session = request.getSession();
+            ArrayList<Integer> closedMessages = (ArrayList<Integer>) session.getAttribute("closedMessages");
+            if (closedMessages == null) {
+                closedMessages = new ArrayList<Integer>();
+            }
         closedMessages.add(closedMessageId);
         session.setAttribute("closedMessages", closedMessages);
-
+        }
 
     }
 
