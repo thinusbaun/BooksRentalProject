@@ -48,6 +48,15 @@
         <url-pattern>/listAdminMessages</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UsersServlet</servlet-name>
+        <servlet-class>com.katner.UsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/listUsers</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
