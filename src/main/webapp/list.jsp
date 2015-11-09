@@ -70,7 +70,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <jsp:include page="/listBooks"></jsp:include>
+                <jsp:include page="/listBooks">
+                    <jsp:param name="authorId" value="${param.authorId}"/>
+                    <jsp:param name="tagId" value="${param.tagId}"/>
+                </jsp:include>
                 <c:if test="${not empty books}">
 
                     <c:forEach items="${books}" var="book">
@@ -79,13 +82,18 @@
                             <td>
                                     <c:set var="authors" value="${book.getAuthors()}"/>
                                 <c:forEach items="${authors}" var="author">
-                                    ${author.getName()}
+                                <a href="<c:url value="list.jsp?authorId=${author.getId()}"/>">${author.getName()}</a>
                                 </c:forEach>
                             <td>
                                 <c:set var="tags" value="${book.getTags()}"></c:set>
                                 <c:forEach items="${tags}" var="tag">
-                                    <span class="label label-primary">${tag.getTitle()}</span>
+                                    <a href="<c:url value="list.jsp?tagId=${tag.getId()}"/>"><span
+                                            class="label label-primary">${tag.getTitle()}</span></a>
                                 </c:forEach>
+                            </td>
+                            <td>
+                                <a href="rentBook.jsp?bookId=${book.getId()}"><span
+                                        class="label label-info">Wypożycz</span></a>
                             </td>
                         </tr>
                     </c:forEach>
