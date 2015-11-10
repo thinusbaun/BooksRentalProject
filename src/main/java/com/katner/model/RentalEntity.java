@@ -77,7 +77,7 @@ public class RentalEntity {
         this.bookCopy = bookCopy;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     public AuthUserEntity getUser() {
         return user;

@@ -21,7 +21,7 @@ public class AuthUserEntity {
     private byte isStaff;
     private byte isActive;
     private Timestamp dateJoined;
-    private RentalEntity rentals;
+    private List<RentalEntity> rentals;
     private List<SearchEntryEntity> searches;
 
     @Id
@@ -172,12 +172,12 @@ public class AuthUserEntity {
         return result;
     }
 
-    @OneToOne(mappedBy = "user")
-    public RentalEntity getRentals() {
+    @OneToMany(mappedBy = "user")
+    public List<RentalEntity> getRentals() {
         return rentals;
     }
 
-    public void setRentals(RentalEntity rentals) {
+    public void setRentals(List<RentalEntity> rentals) {
         this.rentals = rentals;
     }
 

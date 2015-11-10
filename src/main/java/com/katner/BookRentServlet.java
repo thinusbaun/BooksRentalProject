@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by michal on 09.11.15.
@@ -23,7 +24,17 @@ public class BookRentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         EntityManager entityManager = EntityManagerHelper.getEntityManager();
-        BookCopyEntity bookCopy = entityManager.find(BookCopyEntity.class, Integer.parseInt(request.getParameter("rentBookId")));
+        String returnRentalIdString = request.getParameter("returnRentalId");
+        BookCopyEntity bookCopy;
+        if (returnRentalIdString != null) {
+            RentalEntity rental = entityManager.find(RentalEntity.class, Integer.parseInt(returnRentalIdString));
+            rental.setReturnDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+            entityManager.getTransaction().begin();
+            entityManager.merge(rental);
+            entityManager.getTransaction().commit();
+            return;
+        }
+        bookCopy = entityManager.find(BookCopyEntity.class, Integer.parseInt(request.getParameter("rentBookId")));
         if (bookCopy != null) {
             RentalEntity rentalEntity = new RentalEntity();
             rentalEntity.setBookCopy(bookCopy);
@@ -37,6 +48,13 @@ public class BookRentServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userIdString = request.getParameter("userId");
+        EntityManager em = EntityManagerHelper.getEntityManager();
+        if (userIdString != null) {
+            AuthUserEntity entity = em.find(AuthUserEntity.class, Integer.parseInt(userIdString));
+            List<RentalEntity> rentals = entity.getRentals();
+            request.setAttribute("rentals", rentals);
+        }
 
     }
 }

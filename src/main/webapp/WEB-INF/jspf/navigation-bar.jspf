@@ -37,7 +37,7 @@
                             Logowanie</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a><span class="glyphicon glyphicon-user"></span> <c:out
+                        <li><a href="<c:url value="user.jsp"/>"><span class="glyphicon glyphicon-user"></span> <c:out
                                 value="${user.getFirstName()}"></c:out> </a></li>
                         <li><a href="http://localhost:8080/logout"><span class="glyphicon glyphicon-log-out"></span>
                             Wyloguj</a></li>
