@@ -4,19 +4,19 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "rental", schema = "", catalog = "wypozyczalnia")
+@Table(name = "rental", schema = "wypozyczalnia", catalog = "")
 public class RentalEntity {
     private int id;
-    private int userId;
-    private int bookCopyId;
     private Date rentalDate;
     private Date returnDate;
+    private BookCopyEntity bookCopy;
+    private AuthUserEntity user;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -26,27 +26,7 @@ public class RentalEntity {
     }
 
     @Basic
-    @Column(name = "userId")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "bookCopyId")
-    public int getBookCopyId() {
-        return bookCopyId;
-    }
-
-    public void setBookCopyId(int bookCopyId) {
-        this.bookCopyId = bookCopyId;
-    }
-
-    @Basic
-    @Column(name = "rentalDate")
+    @Column(name = "rentalDate", nullable = true)
     public Date getRentalDate() {
         return rentalDate;
     }
@@ -56,7 +36,7 @@ public class RentalEntity {
     }
 
     @Basic
-    @Column(name = "returnDate")
+    @Column(name = "returnDate", nullable = true)
     public Date getReturnDate() {
         return returnDate;
     }
@@ -73,8 +53,6 @@ public class RentalEntity {
         RentalEntity that = (RentalEntity) o;
 
         if (id != that.id) return false;
-        if (userId != that.userId) return false;
-        if (bookCopyId != that.bookCopyId) return false;
         if (rentalDate != null ? !rentalDate.equals(that.rentalDate) : that.rentalDate != null) return false;
         if (returnDate != null ? !returnDate.equals(that.returnDate) : that.returnDate != null) return false;
 
@@ -84,10 +62,28 @@ public class RentalEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + userId;
-        result = 31 * result + bookCopyId;
         result = 31 * result + (rentalDate != null ? rentalDate.hashCode() : 0);
         result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "bookCopyId", referencedColumnName = "id", nullable = false)
+    public BookCopyEntity getBookCopy() {
+        return bookCopy;
+    }
+
+    public void setBookCopy(BookCopyEntity bookCopy) {
+        this.bookCopy = bookCopy;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    public AuthUserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(AuthUserEntity user) {
+        this.user = user;
     }
 }

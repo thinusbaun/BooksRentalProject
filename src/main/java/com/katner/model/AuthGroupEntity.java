@@ -3,16 +3,16 @@ package com.katner.model;
 import javax.persistence.*;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "auth_group", schema = "", catalog = "wypozyczalnia")
+@Table(name = "auth_group", schema = "wypozyczalnia", catalog = "")
 public class AuthGroupEntity {
     private int id;
     private String name;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -22,7 +22,7 @@ public class AuthGroupEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 80)
     public String getName() {
         return name;
     }

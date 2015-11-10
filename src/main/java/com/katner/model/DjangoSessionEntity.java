@@ -4,17 +4,17 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "django_session", schema = "", catalog = "wypozyczalnia")
+@Table(name = "django_session", schema = "wypozyczalnia", catalog = "")
 public class DjangoSessionEntity {
     private String sessionKey;
     private String sessionData;
     private Timestamp expireDate;
 
     @Id
-    @Column(name = "session_key")
+    @Column(name = "session_key", nullable = false, length = 40)
     public String getSessionKey() {
         return sessionKey;
     }
@@ -24,7 +24,7 @@ public class DjangoSessionEntity {
     }
 
     @Basic
-    @Column(name = "session_data")
+    @Column(name = "session_data", nullable = false, length = -1)
     public String getSessionData() {
         return sessionData;
     }
@@ -34,7 +34,7 @@ public class DjangoSessionEntity {
     }
 
     @Basic
-    @Column(name = "expire_date")
+    @Column(name = "expire_date", nullable = false)
     public Timestamp getExpireDate() {
         return expireDate;
     }

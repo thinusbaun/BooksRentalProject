@@ -3,10 +3,10 @@ package com.katner.model;
 import javax.persistence.*;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "auth_permission", schema = "", catalog = "wypozyczalnia")
+@Table(name = "auth_permission", schema = "wypozyczalnia", catalog = "")
 public class AuthPermissionEntity {
     private int id;
     private String name;
@@ -14,7 +14,7 @@ public class AuthPermissionEntity {
     private String codename;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -24,7 +24,7 @@ public class AuthPermissionEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 255)
     public String getName() {
         return name;
     }
@@ -34,7 +34,7 @@ public class AuthPermissionEntity {
     }
 
     @Basic
-    @Column(name = "content_type_id")
+    @Column(name = "content_type_id", nullable = false)
     public int getContentTypeId() {
         return contentTypeId;
     }
@@ -44,7 +44,7 @@ public class AuthPermissionEntity {
     }
 
     @Basic
-    @Column(name = "codename")
+    @Column(name = "codename", nullable = false, length = 100)
     public String getCodename() {
         return codename;
     }

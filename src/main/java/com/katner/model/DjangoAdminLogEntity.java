@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "django_admin_log", schema = "", catalog = "wypozyczalnia")
+@Table(name = "django_admin_log", schema = "wypozyczalnia", catalog = "")
 public class DjangoAdminLogEntity {
     private int id;
     private Timestamp actionTime;
@@ -19,7 +19,7 @@ public class DjangoAdminLogEntity {
     private int userId;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -29,7 +29,7 @@ public class DjangoAdminLogEntity {
     }
 
     @Basic
-    @Column(name = "action_time")
+    @Column(name = "action_time", nullable = false)
     public Timestamp getActionTime() {
         return actionTime;
     }
@@ -39,7 +39,7 @@ public class DjangoAdminLogEntity {
     }
 
     @Basic
-    @Column(name = "object_id")
+    @Column(name = "object_id", nullable = true, length = -1)
     public String getObjectId() {
         return objectId;
     }
@@ -49,7 +49,7 @@ public class DjangoAdminLogEntity {
     }
 
     @Basic
-    @Column(name = "object_repr")
+    @Column(name = "object_repr", nullable = false, length = 200)
     public String getObjectRepr() {
         return objectRepr;
     }
@@ -59,7 +59,7 @@ public class DjangoAdminLogEntity {
     }
 
     @Basic
-    @Column(name = "action_flag")
+    @Column(name = "action_flag", nullable = false)
     public short getActionFlag() {
         return actionFlag;
     }
@@ -69,7 +69,7 @@ public class DjangoAdminLogEntity {
     }
 
     @Basic
-    @Column(name = "change_message")
+    @Column(name = "change_message", nullable = false, length = -1)
     public String getChangeMessage() {
         return changeMessage;
     }
@@ -79,7 +79,7 @@ public class DjangoAdminLogEntity {
     }
 
     @Basic
-    @Column(name = "content_type_id")
+    @Column(name = "content_type_id", nullable = true)
     public Integer getContentTypeId() {
         return contentTypeId;
     }
@@ -89,7 +89,7 @@ public class DjangoAdminLogEntity {
     }
 
     @Basic
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     public int getUserId() {
         return userId;
     }

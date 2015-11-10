@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "django_migrations", schema = "", catalog = "wypozyczalnia")
+@Table(name = "django_migrations", schema = "wypozyczalnia", catalog = "")
 public class DjangoMigrationsEntity {
     private int id;
     private String app;
@@ -15,7 +15,7 @@ public class DjangoMigrationsEntity {
     private Timestamp applied;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -25,7 +25,7 @@ public class DjangoMigrationsEntity {
     }
 
     @Basic
-    @Column(name = "app")
+    @Column(name = "app", nullable = false, length = 255)
     public String getApp() {
         return app;
     }
@@ -35,7 +35,7 @@ public class DjangoMigrationsEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 255)
     public String getName() {
         return name;
     }
@@ -45,7 +45,7 @@ public class DjangoMigrationsEntity {
     }
 
     @Basic
-    @Column(name = "applied")
+    @Column(name = "applied", nullable = false)
     public Timestamp getApplied() {
         return applied;
     }

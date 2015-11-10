@@ -3,17 +3,17 @@ package com.katner.model;
 import javax.persistence.*;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "django_content_type", schema = "", catalog = "wypozyczalnia")
+@Table(name = "django_content_type", schema = "wypozyczalnia", catalog = "")
 public class DjangoContentTypeEntity {
     private int id;
     private String appLabel;
     private String model;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class DjangoContentTypeEntity {
     }
 
     @Basic
-    @Column(name = "app_label")
+    @Column(name = "app_label", nullable = false, length = 100)
     public String getAppLabel() {
         return appLabel;
     }
@@ -33,7 +33,7 @@ public class DjangoContentTypeEntity {
     }
 
     @Basic
-    @Column(name = "model")
+    @Column(name = "model", nullable = false, length = 100)
     public String getModel() {
         return model;
     }

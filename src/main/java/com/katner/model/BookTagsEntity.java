@@ -3,17 +3,17 @@ package com.katner.model;
 import javax.persistence.*;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "book_tags", schema = "", catalog = "wypozyczalnia")
+@Table(name = "book_tags", schema = "wypozyczalnia", catalog = "")
 public class BookTagsEntity {
     private int id;
     private int bookId;
     private int tagId;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class BookTagsEntity {
     }
 
     @Basic
-    @Column(name = "book_id")
+    @Column(name = "book_id", nullable = false)
     public int getBookId() {
         return bookId;
     }
@@ -33,7 +33,7 @@ public class BookTagsEntity {
     }
 
     @Basic
-    @Column(name = "tag_id")
+    @Column(name = "tag_id", nullable = false)
     public int getTagId() {
         return tagId;
     }

@@ -3,17 +3,17 @@ package com.katner.model;
 import javax.persistence.*;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "auth_group_permissions", schema = "", catalog = "wypozyczalnia")
+@Table(name = "auth_group_permissions", schema = "wypozyczalnia", catalog = "")
 public class AuthGroupPermissionsEntity {
     private int id;
     private int groupId;
     private int permissionId;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class AuthGroupPermissionsEntity {
     }
 
     @Basic
-    @Column(name = "group_id")
+    @Column(name = "group_id", nullable = false)
     public int getGroupId() {
         return groupId;
     }
@@ -33,7 +33,7 @@ public class AuthGroupPermissionsEntity {
     }
 
     @Basic
-    @Column(name = "permission_id")
+    @Column(name = "permission_id", nullable = false)
     public int getPermissionId() {
         return permissionId;
     }

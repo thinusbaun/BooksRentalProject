@@ -3,17 +3,17 @@ package com.katner.model;
 import javax.persistence.*;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "searchEntry", schema = "", catalog = "wypozyczalnia")
+@Table(name = "searchEntry", schema = "wypozyczalnia", catalog = "")
 public class SearchEntryEntity {
     private int id;
-    private int userId;
     private String text;
+    private AuthUserEntity user;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,17 +23,7 @@ public class SearchEntryEntity {
     }
 
     @Basic
-    @Column(name = "userId")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "text")
+    @Column(name = "text", nullable = false, length = 120)
     public String getText() {
         return text;
     }
@@ -50,7 +40,6 @@ public class SearchEntryEntity {
         SearchEntryEntity that = (SearchEntryEntity) o;
 
         if (id != that.id) return false;
-        if (userId != that.userId) return false;
         if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
         return true;
@@ -59,8 +48,17 @@ public class SearchEntryEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + userId;
         result = 31 * result + (text != null ? text.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    public AuthUserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(AuthUserEntity user) {
+        this.user = user;
     }
 }

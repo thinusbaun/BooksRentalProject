@@ -1,34 +1,26 @@
 package com.katner.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "bookCopy", schema = "", catalog = "wypozyczalnia")
+@Table(name = "bookCopy", schema = "wypozyczalnia", catalog = "")
 public class BookCopyEntity {
     private int id;
-    private int bookId;
+    private BookEntity book;
+    private List<RentalEntity> rentals;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "bookId")
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
     }
 
     @Override
@@ -39,15 +31,31 @@ public class BookCopyEntity {
         BookCopyEntity that = (BookCopyEntity) o;
 
         if (id != that.id) return false;
-        if (bookId != that.bookId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + bookId;
-        return result;
+        return id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "bookId", referencedColumnName = "id", nullable = false)
+    public BookEntity getBook() {
+        return book;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
+    }
+
+    @OneToMany(mappedBy = "bookCopy")
+    public List<RentalEntity> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<RentalEntity> rentals) {
+        this.rentals = rentals;
     }
 }

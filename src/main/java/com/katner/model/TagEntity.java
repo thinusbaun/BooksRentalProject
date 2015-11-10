@@ -4,26 +4,17 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by michal on 08.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
 @Table(name = "tag", schema = "wypozyczalnia", catalog = "")
 public class TagEntity {
-    private List<BookEntity> books;
     private int id;
     private String title;
-
-    @ManyToMany(mappedBy = "tags")
-    public List<BookEntity> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<BookEntity> books) {
-        this.books = books;
-    }
+    private List<BookEntity> books;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -33,7 +24,7 @@ public class TagEntity {
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, length = 45)
     public String getTitle() {
         return title;
     }
@@ -60,5 +51,14 @@ public class TagEntity {
         int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         return result;
+    }
+
+    @ManyToMany(mappedBy = "tags")
+    public List<BookEntity> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookEntity> books) {
+        this.books = books;
     }
 }

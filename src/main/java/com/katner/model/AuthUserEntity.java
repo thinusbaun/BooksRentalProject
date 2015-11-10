@@ -2,12 +2,13 @@ package com.katner.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
- * Created by michal on 01.11.15.
+ * Created by michal on 09.11.15.
  */
 @Entity
-@Table(name = "auth_user", schema = "", catalog = "wypozyczalnia")
+@Table(name = "auth_user", schema = "wypozyczalnia", catalog = "")
 public class AuthUserEntity {
     private int id;
     private String password;
@@ -20,9 +21,11 @@ public class AuthUserEntity {
     private byte isStaff;
     private byte isActive;
     private Timestamp dateJoined;
+    private RentalEntity rentals;
+    private List<SearchEntryEntity> searches;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -32,7 +35,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "password", nullable = false, length = 128)
     public String getPassword() {
         return password;
     }
@@ -42,7 +45,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "last_login")
+    @Column(name = "last_login", nullable = true)
     public Timestamp getLastLogin() {
         return lastLogin;
     }
@@ -52,7 +55,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "is_superuser")
+    @Column(name = "is_superuser", nullable = false)
     public byte getIsSuperuser() {
         return isSuperuser;
     }
@@ -62,7 +65,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, length = 30)
     public String getUsername() {
         return username;
     }
@@ -72,7 +75,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false, length = 30)
     public String getFirstName() {
         return firstName;
     }
@@ -82,7 +85,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false, length = 30)
     public String getLastName() {
         return lastName;
     }
@@ -92,7 +95,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, length = 254)
     public String getEmail() {
         return email;
     }
@@ -102,7 +105,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "is_staff")
+    @Column(name = "is_staff", nullable = false)
     public byte getIsStaff() {
         return isStaff;
     }
@@ -112,7 +115,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     public byte getIsActive() {
         return isActive;
     }
@@ -122,7 +125,7 @@ public class AuthUserEntity {
     }
 
     @Basic
-    @Column(name = "date_joined")
+    @Column(name = "date_joined", nullable = false)
     public Timestamp getDateJoined() {
         return dateJoined;
     }
@@ -167,5 +170,23 @@ public class AuthUserEntity {
         result = 31 * result + (int) isActive;
         result = 31 * result + (dateJoined != null ? dateJoined.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne(mappedBy = "user")
+    public RentalEntity getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(RentalEntity rentals) {
+        this.rentals = rentals;
+    }
+
+    @OneToMany(mappedBy = "user")
+    public List<SearchEntryEntity> getSearches() {
+        return searches;
+    }
+
+    public void setSearches(List<SearchEntryEntity> searches) {
+        this.searches = searches;
     }
 }
