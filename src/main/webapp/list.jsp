@@ -92,8 +92,10 @@
                                 </c:forEach>
                             </td>
                             <td>
+                                <c:if test="${user ne null}">
                                 <a href="rentBook.jsp?bookId=${book.getId()}"><span
                                         class="label label-info">Wypożycz</span></a>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
