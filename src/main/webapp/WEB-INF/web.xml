@@ -57,6 +57,24 @@
         <url-pattern>/listUsers</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>BookCopyServlet</servlet-name>
+        <servlet-class>com.katner.BookCopyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookCopyServlet</servlet-name>
+        <url-pattern>/bookCopy</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookRentServlet</servlet-name>
+        <servlet-class>com.katner.BookRentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookRentServlet</servlet-name>
+        <url-pattern>/bookRent</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
