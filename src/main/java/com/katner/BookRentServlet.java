@@ -4,6 +4,9 @@ import com.katner.model.AuthUserEntity;
 import com.katner.model.BookCopyEntity;
 import com.katner.model.RentalEntity;
 import com.katner.util.EntityManagerHelper;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -51,8 +54,9 @@ public class BookRentServlet extends HttpServlet {
         String userIdString = request.getParameter("userId");
         EntityManager em = EntityManagerHelper.getEntityManager();
         if (userIdString != null) {
-            AuthUserEntity entity = em.find(AuthUserEntity.class, Integer.parseInt(userIdString));
-            List<RentalEntity> rentals = entity.getRentals();
+            Session session = em.unwrap(Session.class);
+            Criteria criteria = session.createCriteria(RentalEntity.class, "rental");
+            List<RentalEntity> rentals = criteria.add(Restrictions.eq("user.id", Integer.parseInt(userIdString))).add(Restrictions.isNull("returnDate")).list();
             request.setAttribute("rentals", rentals);
         }
 
