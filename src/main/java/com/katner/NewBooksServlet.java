@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,17 +22,23 @@ import java.util.List;
 @WebServlet(name = "NewBooksServlet")
 public class NewBooksServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
+        session.setAttribute("newBooksClosed", new Object());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityManager entityManager = EntityManagerHelper.getEntityManager();
-        List<BookEntity> books = null;
+        HttpSession httpSession = request.getSession();
+        Object newBooksClosed = httpSession.getAttribute("newBooksClosed");
 
-        Session session = entityManager.unwrap(Session.class);
-        Criteria criteria = session.createCriteria(BookEntity.class).addOrder(Order.desc("addedDate"));
-        books = criteria.setMaxResults(10).list();
+        if (newBooksClosed == null) {
+            EntityManager entityManager = EntityManagerHelper.getEntityManager();
+            List<BookEntity> books = null;
 
-        request.setAttribute("newBooks", books);
+            Session session = entityManager.unwrap(Session.class);
+            Criteria criteria = session.createCriteria(BookEntity.class).addOrder(Order.desc("addedDate"));
+            books = criteria.setMaxResults(10).list();
+
+            request.setAttribute("newBooks", books);
+        }
     }
 }

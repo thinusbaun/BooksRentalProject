@@ -1,15 +1,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/newBooks"></jsp:include>
-<c:if test="${not empty newBooks}">
-    <div class="alert alert-info fade in">
-        <div>Nowe książki w bibliotece:
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>
-        <ul>
-            <c:forEach items="${newBooks}" var="book">
-                <li>
-                        ${book.getTitle()}
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('a.close-new-books').click(function (event) {
+            var id = event.target.id.split('-')[event.target.id.split('-').length - 1];
+            $.post("/newBooks");
+        });
+    });
+
+</script>
+<c:if test="${not empty user}">
+    <jsp:include page="/newBooks"></jsp:include>
+    <c:if test="${not empty newBooks}">
+        <div class="alert alert-info fade in">
+            <div>Nowe książki w bibliotece:
+                <a class="close close-new-books" data-dismiss="alert" aria-label="close">&times;</a></div>
+            <ul>
+                <c:forEach items="${newBooks}" var="book">
+                    <li>
+                        <a href="<c:url value="/bookRent?bookId=${book.getId()}"></c:url>">${book.getTitle()}</a> dodane
+                        <fmt:formatDate value="${book.getAddedDate()}" pattern="dd-MM-yyyy"/>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
+    </c:if>
 </c:if>

@@ -3,7 +3,7 @@
 <c:if test="${not empty messages}">
     <c:forEach items="${messages}" var="message">
         <div class="alert alert-info fade in">${message.getContent()}
-            <a href="#" class="close" data-dismiss="alert" aria-label="close"
+            <a href="#" class="close close-admin-message" data-dismiss="alert" aria-label="close"
                id="close-alert-${message.getId()}">&times;</a></div>
     </c:forEach>
 </c:if>
