@@ -1,6 +1,7 @@
 package com.katner.model;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -15,6 +16,17 @@ public class BookEntity {
     private List<AuthorEntity> authors;
     private List<TagEntity> tags;
     private List<BookCopyEntity> copies;
+    private Date addedDate;
+
+    @Basic
+    @Column(name = "addedDate", nullable = true)
+    public Date getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

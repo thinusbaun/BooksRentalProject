@@ -75,6 +75,15 @@
         <url-pattern>/bookRent</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>NewBooksServlet</servlet-name>
+        <servlet-class>com.katner.NewBooksServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NewBooksServlet</servlet-name>
+        <url-pattern>/newBooks</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
