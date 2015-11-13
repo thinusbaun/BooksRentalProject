@@ -1,4 +1,9 @@
+<%@ page import="com.katner.model.RentalEntity" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="pl">
@@ -56,6 +61,8 @@
                     <th>Tytuł</th>
                     <th>Autorzy</th>
                     <th>Tagi</th>
+                    <th>Data wypożyczenia</th>
+                    <th>Wypożyczona do</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,6 +85,20 @@
                                     <a href="<c:url value="list.jsp?tagId=${tag.getId()}"/>"><span
                                             class="label label-primary">${tag.getTitle()}</span></a>
                                 </c:forEach>
+                            </td>
+                            <td>
+                                <fmt:formatDate value="${rental.getRentalDate()}" pattern="dd-MM-yyyy"/>
+                            </td>
+                            <td>
+                                <%
+                                    RentalEntity rentalEntity = (RentalEntity) pageContext.getAttribute("rental");
+                                    Calendar cal = new GregorianCalendar();
+                                    cal.setTimeInMillis(rentalEntity.getRentalDate().getTime());
+                                    cal.add(Calendar.DATE, 30);
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                                    String date = sdf.format(cal.getTime());
+                                %>
+                                <%=cal.after(Calendar.getInstance()) ? date : "<span style=\"color:red\">" + date + "</span>"%>
                             </td>
                             <td>
                                 <c:if test="${user ne null}">
