@@ -1,5 +1,7 @@
 package com.katner.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class TagEntity {
 
     @Basic
     @Column(name = "title", nullable = false, length = 45)
+    @Field
     public String getTitle() {
         return title;
     }

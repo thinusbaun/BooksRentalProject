@@ -1,5 +1,7 @@
 package com.katner.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class AuthorEntity {
 
     @Basic
     @Column(name = "name", nullable = false, length = 100)
+    @Field
     public String getName() {
         return name;
     }
