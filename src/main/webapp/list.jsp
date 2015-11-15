@@ -1,3 +1,6 @@
+<%@ page import="com.katner.model.BookCopyEntity" %>
+<%@ page import="com.katner.model.BookEntity" %>
+<%@ page import="com.katner.model.RentalEntity" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -66,6 +69,7 @@
                     <th>Tytuł</th>
                     <th>Autorzy</th>
                     <th>Tagi</th>
+                    <th>Stan magazynowy</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,13 +82,28 @@
                                     <c:set var="authors" value="${book.getAuthors()}"/>
                                 <c:forEach items="${authors}" var="author">
                                 <a href="<c:url value="list.jsp?authorId=${author.getId()}"/>">${author.getName()}</a>
-                    </c:forEach>
+                                </c:forEach>
                             <td>
                                 <c:set var="tags" value="${book.getTags()}"></c:set>
                                 <c:forEach items="${tags}" var="tag">
                                     <a href="<c:url value="list.jsp?tagId=${tag.getId()}"/>"><span
                                             class="label label-primary">${tag.getTitle()}</span></a>
                                 </c:forEach>
+                            </td>
+                            <td>
+                                <%
+                                    BookEntity book = (BookEntity) pageContext.getAttribute("book");
+                                    Integer numOfCopies = book.getCopies().size();
+                                    Integer numOfFreeCopies = numOfCopies;
+                                    for (BookCopyEntity bookCopy : book.getCopies()) {
+                                        for (RentalEntity rental : bookCopy.getRentals()) {
+                                            if (rental.getReturnDate() == null) {
+                                                numOfFreeCopies--;
+                                            }
+                                        }
+                                    }
+                                %>
+                                <%=numOfFreeCopies%>/<%= numOfCopies %>
                             </td>
                             <td>
                                 <c:if test="${user ne null}">
@@ -98,7 +117,7 @@
 
                 </tbody>
             </table>
-    </div>
+        </div>
         <%--</c:if>--%>
     </div>
 </div>
