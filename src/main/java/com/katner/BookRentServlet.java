@@ -52,11 +52,17 @@ public class BookRentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userIdString = request.getParameter("userId");
+        Boolean showArchive = (request.getParameter("archive") != null);
         EntityManager em = EntityManagerHelper.getEntityManager();
         if (userIdString != null) {
             Session session = em.unwrap(Session.class);
             Criteria criteria = session.createCriteria(RentalEntity.class, "rental");
-            List<RentalEntity> rentals = criteria.add(Restrictions.eq("user.id", Integer.parseInt(userIdString))).add(Restrictions.isNull("returnDate")).list();
+            List<RentalEntity> rentals;
+            if (showArchive) {
+                rentals = criteria.add(Restrictions.eq("user.id", Integer.parseInt(userIdString))).add(Restrictions.isNotNull("returnDate")).list();
+            } else {
+                rentals = criteria.add(Restrictions.eq("user.id", Integer.parseInt(userIdString))).add(Restrictions.isNull("returnDate")).list();
+            }
             request.setAttribute("rentals", rentals);
         }
 

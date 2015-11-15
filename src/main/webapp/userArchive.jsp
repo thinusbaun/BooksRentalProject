@@ -1,7 +1,3 @@
-<%@ page import="com.katner.model.RentalEntity" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Calendar" %>
-<%@ page import="java.util.GregorianCalendar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -44,8 +40,8 @@
         <div class="jumbotron">
             <h2>Książki</h2>
 
-            <form action="userArchive.jsp" method="get">
-                <input type="submit" value="Archiwum"/>
+            <form action="user.jsp" method="get">
+                <input type="submit" value="Aktualne wypożyczenia"/>
             </form>
 
             <table class="table table-striped">
@@ -55,12 +51,13 @@
                     <th>Autorzy</th>
                     <th>Tagi</th>
                     <th>Data wypożyczenia</th>
-                    <th>Wypożyczona do</th>
+                    <th>Data zwrócenia</th>
                 </tr>
                 </thead>
                 <tbody>
                 <jsp:include page="/bookRent">
                     <jsp:param name="userId" value="${user.getId()}"/>
+                    <jsp:param name="archive" value="1"/>
                 </jsp:include>
                 <c:if test="${not empty rentals}">
 
@@ -83,21 +80,7 @@
                                 <fmt:formatDate value="${rental.getRentalDate()}" pattern="dd-MM-yyyy"/>
                             </td>
                             <td>
-                                <%
-                                    RentalEntity rentalEntity = (RentalEntity) pageContext.getAttribute("rental");
-                                    Calendar cal = new GregorianCalendar();
-                                    cal.setTimeInMillis(rentalEntity.getRentalDate().getTime());
-                                    cal.add(Calendar.DATE, 30);
-                                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                                    String date = sdf.format(cal.getTime());
-                                %>
-                                <%=cal.after(Calendar.getInstance()) ? date : "<span style=\"color:red\">" + date + "</span>"%>
-                            </td>
-                            <td>
-                                <c:if test="${user ne null}">
-                                    <a class="returnButton" id="${rental.getId()}"><span
-                                            class="label label-info">Zwróć</span></a>
-                                </c:if>
+                                <fmt:formatDate value="${rental.getReturnDate()}" pattern="dd-MM-yyyy"/>
                             </td>
                         </tr>
                     </c:forEach>
