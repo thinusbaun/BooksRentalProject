@@ -69,7 +69,7 @@
                                 <a href="<c:url value="list.jsp?authorId=${author.getId()}"/>">${author.getName()}</a>
                                 </c:forEach>
                             <td>
-                                <c:set var="tags" value="${book.getBookCopy().getBook().getTags()}"></c:set>
+                                <c:set var="tags" value="${rental.getBookCopy().getBook().getTags()}"></c:set>
                                 <c:forEach items="${tags}" var="tag">
                                     <a href="<c:url value="list.jsp?tagId=${tag.getId()}"/>"><span
                                             class="label label-primary">${tag.getTitle()}</span></a>
