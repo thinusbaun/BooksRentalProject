@@ -2,6 +2,10 @@ package com.katner;
 
 import com.katner.model.BookEntity;
 import com.katner.util.EntityManagerHelper;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
@@ -35,10 +39,10 @@ public class SearchServlet extends HttpServlet {
             searchFields.add("isbn");
         }
         if (request.getParameter("author") != null) {
-            searchFields.add("authors.name");
+            searchFields.add("authors.name"); //TODO: zmiana "author:" z zapytania na authors.name?
         }
         if (request.getParameter("tag") != null) {
-            searchFields.add("tags.title");
+            searchFields.add("tags.title"); //TODO: zmiana "tag:" z zapytania na tags.title?
         }
 
         if (searchQuery != null) {
@@ -48,11 +52,17 @@ public class SearchServlet extends HttpServlet {
             em.getTransaction().begin();
             QueryBuilder qb = fullTextEntityManager.getSearchFactory()
                     .buildQueryBuilder().forEntity(BookEntity.class).get();
-            org.apache.lucene.search.Query luceneQuery = qb
-                    .keyword()
-                    .onFields(searchFields.toArray(new String[searchFields.size()]))
-                    .matching(searchQuery)
-                    .createQuery();
+
+            org.apache.lucene.search.Query luceneQuery = null;
+            try {
+                MultiFieldQueryParser parser = new MultiFieldQueryParser(searchFields.toArray(new String[searchFields.size()]),
+                        new SimpleAnalyzer());
+                parser.setDefaultOperator(QueryParser.Operator.AND);
+                luceneQuery = parser.parse(searchQuery);
+            } catch (ParseException e) {
+                e.printStackTrace(); //TODO: zwracać error do jsp
+            }
+
 
             javax.persistence.Query jpaQuery =
                     fullTextEntityManager.createFullTextQuery(luceneQuery, BookEntity.class);
