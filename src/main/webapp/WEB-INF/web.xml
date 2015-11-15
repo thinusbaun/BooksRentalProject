@@ -90,7 +90,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
-        <url-pattern>/search</url-pattern>
+        <url-pattern>/searchServlet</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

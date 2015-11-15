@@ -1,8 +1,6 @@
 package com.katner;
 
-import com.katner.model.AuthUserEntity;
 import com.katner.model.BookEntity;
-import com.katner.model.SearchEntryEntity;
 import com.katner.util.EntityManagerHelper;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -13,8 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,6 +27,19 @@ public class SearchServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchQuery = request.getParameter("q");
+        ArrayList<String> searchFields = new ArrayList<String>();
+        if (request.getParameter("title") != null) {
+            searchFields.add("title");
+        }
+        if (request.getParameter("isbn") != null) {
+            searchFields.add("isbn");
+        }
+        if (request.getParameter("author") != null) {
+            searchFields.add("authors.name");
+        }
+        if (request.getParameter("tag") != null) {
+            searchFields.add("tags.title");
+        }
 
         if (searchQuery != null) {
             EntityManager em = EntityManagerHelper.getEntityManager();
@@ -39,7 +50,7 @@ public class SearchServlet extends HttpServlet {
                     .buildQueryBuilder().forEntity(BookEntity.class).get();
             org.apache.lucene.search.Query luceneQuery = qb
                     .keyword()
-                    .onFields("title", "isbn", "authors.name", "tags.title")
+                    .onFields(searchFields.toArray(new String[searchFields.size()]))
                     .matching(searchQuery)
                     .createQuery();
 
@@ -48,16 +59,9 @@ public class SearchServlet extends HttpServlet {
 
             List result = jpaQuery.getResultList();
 
-            request.setAttribute("searchResult", result);
-
-            HttpSession session = request.getSession();
-            AuthUserEntity user = (AuthUserEntity) session.getAttribute("user");
-            SearchEntryEntity searchEntry = new SearchEntryEntity();
-
-            searchEntry.setText(searchQuery);
-            searchEntry.setId(user.getId());
             em.getTransaction().commit();
-            em.close();
+            request.setAttribute("books", result);
+//            em.close();
 
         }
     }

@@ -12,9 +12,11 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/books.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery-ui.css">
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/js.cookie.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -60,7 +62,17 @@
         <%--<c:if test="${user.isSuperuser eq 1}">--%>
         <div class="jumbotron">
             <h2>Książki</h2>
-
+            <c:choose>
+                <c:when test="${param.q ne null}">
+                    <jsp:include page="/searchServlet"/>
+                </c:when>
+                <c:otherwise>
+                    <jsp:include page="/listBooks">
+                        <jsp:param name="authorId" value="${param.authorId}"/>
+                        <jsp:param name="tagId" value="${param.tagId}"/>
+                    </jsp:include>
+                </c:otherwise>
+            </c:choose>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -70,10 +82,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <jsp:include page="/listBooks">
-                    <jsp:param name="authorId" value="${param.authorId}"/>
-                    <jsp:param name="tagId" value="${param.tagId}"/>
-                </jsp:include>
                 <c:if test="${not empty books}">
 
                     <c:forEach items="${books}" var="book">
@@ -83,7 +91,7 @@
                                     <c:set var="authors" value="${book.getAuthors()}"/>
                                 <c:forEach items="${authors}" var="author">
                                 <a href="<c:url value="list.jsp?authorId=${author.getId()}"/>">${author.getName()}</a>
-                                </c:forEach>
+                    </c:forEach>
                             <td>
                                 <c:set var="tags" value="${book.getTags()}"></c:set>
                                 <c:forEach items="${tags}" var="tag">
@@ -93,8 +101,8 @@
                             </td>
                             <td>
                                 <c:if test="${user ne null}">
-                                <a href="rentBook.jsp?bookId=${book.getId()}"><span
-                                        class="label label-info">Wypożycz</span></a>
+                                    <a href="rentBook.jsp?bookId=${book.getId()}"><span
+                                            class="label label-info">Wypożycz</span></a>
                                 </c:if>
                             </td>
                         </tr>
@@ -103,7 +111,7 @@
 
                 </tbody>
             </table>
-        </div>
+    </div>
         <%--</c:if>--%>
     </div>
 </div>
