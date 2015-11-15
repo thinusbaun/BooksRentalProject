@@ -15,7 +15,7 @@
     <title>Konto użytkownika</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link id="themeCss" href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/books.css" rel="stylesheet">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <script src="js/jquery.min.js"></script>
