@@ -135,7 +135,7 @@
         $('.theme-link').click(function () {
             var themeurl = themes[$(this).attr('data-theme')];
             themesheet.attr('href', themeurl);
-            Cookies.set('theme', themeurl)
+            Cookies.set('theme', themeurl, {expires: 3650})
         });
 
     });

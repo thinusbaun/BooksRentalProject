@@ -13,5 +13,5 @@ function addSearchEntryToCookie() {
     } else {
         searchEntries = [$('#autocomplete').val()];
     }
-    Cookies.set('searchEntries', searchEntries);
+    Cookies.set('searchEntries', searchEntries, {expires: 3650});
 }
