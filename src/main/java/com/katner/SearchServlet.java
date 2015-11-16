@@ -39,10 +39,12 @@ public class SearchServlet extends HttpServlet {
             searchFields.add("isbn");
         }
         if (request.getParameter("author") != null) {
-            searchFields.add("authors.name"); //TODO: zmiana "author:" z zapytania na authors.name?
+            searchFields.add("authors.name");
+            searchQuery = searchQuery.replaceAll("author:", "authors.name:");
         }
         if (request.getParameter("tag") != null) {
-            searchFields.add("tags.title"); //TODO: zmiana "tag:" z zapytania na tags.title?
+            searchFields.add("tags.title");
+            searchQuery = searchQuery.replaceAll("tag:", "tags.title:");
         }
 
         if (searchQuery != null) {

@@ -81,6 +81,7 @@
                 <div class="modal-body">
                     <input type="search" name="q" id="autocomplete"/>
 
+                    <div>Możesz używać operatorów NOT, AND, OR oraz pól "title:", "author:", "isbn:" oraz "tag:"</div>
                     <div>Wyszukaj po:</div>
                     <div><input type="checkbox" name="title" value="1" checked="checked"/>Tytuł książki</div>
                     <div><input type="checkbox" name="isbn" value="1" checked="checked"/>ISBN</div>
