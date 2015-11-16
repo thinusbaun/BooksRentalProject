@@ -57,8 +57,10 @@
                     <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Email</th>
+                    <c:if test="${user.getIsSuperuser() eq 1}">
                     <th>Pracownik</th>
                     <th>Administrator</th>
+                    </c:if>
                     <th>Zatwierdzony</th>
                     <th></th>
                 </tr>
@@ -66,19 +68,23 @@
                 <tbody>
                 <jsp:include page="/listUsers"></jsp:include>
                 <c:if test="${not empty users}">
-                    <c:forEach items="${users}" var="user">
-                        <tr id="${user.getId()}-row">
-                            <td>${user.getUsername()}</td>
-                            <td>${user.getFirstName()}</td>
-                            <td>${user.getLastName()}</td>
-                            <td>${user.getEmail()}</td>
-                            <td><input type="checkbox" id="${user.getId()}-staff"
-                                       <c:if test="${user.getIsStaff() eq 1}">checked="checked"</c:if>></td>
-                            <td><input type="checkbox" id="${user.getId()}-superuser"
-                                       <c:if test="${user.getIsSuperuser() eq 1}">checked="checked"</c:if>></td>
-                            <td><input type="checkbox" id="${user.getId()}-active"
-                                       <c:if test="${user.getIsActive() eq 1}">checked="checked"</c:if>></td>
-                            <td><a class="deleteUser btn btn-primary pull-right" id="${user.getId()}-delete">Usuń</a>
+                    <c:forEach items="${users}" var="userEntry">
+                        <tr id="${userEntry.getId()}-row">
+                            <td>${userEntry.getUsername()}</td>
+                            <td>${userEntry.getFirstName()}</td>
+                            <td>${userEntry.getLastName()}</td>
+                            <td>${userEntry.getEmail()}</td>
+                            <c:if test="${user.getIsSuperuser() eq 1}">
+                                <td><input type="checkbox" id="${userEntry.getId()}-staff"
+                                           <c:if test="${userEntry.getIsStaff() eq 1}">checked="checked"</c:if>></td>
+                                <td><input type="checkbox" id="${userEntry.getId()}-superuser"
+                                           <c:if test="${userEntry.getIsSuperuser() eq 1}">checked="checked"</c:if>>
+                                </td>
+                            </c:if>
+                            <td><input type="checkbox" id="${userEntry.getId()}-active"
+                                       <c:if test="${userEntry.getIsActive() eq 1}">checked="checked"</c:if>></td>
+                            <td><a class="deleteUser btn btn-primary pull-right"
+                                   id="${userEntry.getId()}-delete">Usuń</a>
                             </td>
                         </tr>
                     </c:forEach>

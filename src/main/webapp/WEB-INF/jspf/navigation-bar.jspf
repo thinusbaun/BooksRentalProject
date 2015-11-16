@@ -71,15 +71,15 @@
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
                     <c:when test="${empty user}">
-                        <li><a href="http://localhost:8080/signup"><span class="glyphicon glyphicon-user"></span>
+                        <li><a href="<c:url value="/signup"/>"><span class="glyphicon glyphicon-user"></span>
                             Rejestracja</a></li>
-                        <li><a href="http://localhost:8080/login"><span class="glyphicon glyphicon-log-in"></span>
+                        <li><a href="<c:url value="/login"/>"><span class="glyphicon glyphicon-log-in"></span>
                             Logowanie</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="<c:url value="user.jsp"/>"><span class="glyphicon glyphicon-user"></span> <c:out
+                        <li><a href="<c:url value="/user.jsp"/>"><span class="glyphicon glyphicon-user"></span> <c:out
                                 value="${user.getFirstName()}"></c:out> </a></li>
-                        <li><a href="http://localhost:8080/logout"><span class="glyphicon glyphicon-log-out"></span>
+                        <li><a href="<c:url value="/logout"/>"><span class="glyphicon glyphicon-log-out"></span>
                             Wyloguj</a></li>
                     </c:otherwise>
                 </c:choose>

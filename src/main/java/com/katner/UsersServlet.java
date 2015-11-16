@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -80,7 +81,14 @@ public class UsersServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = EntityManagerHelper.getEntityManager();
-        List<AuthUserEntity> users = em.createQuery("from AuthUserEntity").getResultList();
+        HttpSession session = request.getSession();
+        AuthUserEntity user = (AuthUserEntity) session.getAttribute("user");
+        List<AuthUserEntity> users;
+        if (user.getIsSuperuser() == 1) {
+            users = em.createQuery("from AuthUserEntity").getResultList();
+        } else {
+            users = em.createQuery("from AuthUserEntity where isSuperuser = 0 and isStaff = 0").getResultList();
+        }
         request.setAttribute("users", users);
 
     }
