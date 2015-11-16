@@ -142,8 +142,6 @@
 
     var themesheet = $('#themeCss');
     var themeurl = Cookies.get('theme');
-    console.log(themesheet);
-    console.log(themeurl);
     if (typeof themeurl != 'undefined') {
         themesheet.attr('href', themeurl);
     }

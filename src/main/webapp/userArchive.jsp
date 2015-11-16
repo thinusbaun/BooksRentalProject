@@ -20,8 +20,6 @@
                     var box = $(el).children()[0];
                     if ($(box).hasClass('label-info')) {
                         var id = el.id;
-                        console.log(id);
-                        console.log($(el).id);
                         $.post("/bookRent", {"returnRentalId": id});
                         $(box).removeClass('label-info');
                         $(box).addClass('label-default');

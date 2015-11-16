@@ -9,7 +9,7 @@ $(document).ready(function () {
 function addSearchEntryToCookie() {
     var searchEntries = Cookies.getJSON('searchEntries');
     if (typeof searchEntries != 'undefined') {
-        searchEntries.append($('#autocomplete').val());
+        searchEntries.push($('#autocomplete').val());
     } else {
         searchEntries = [$('#autocomplete').val()];
     }
