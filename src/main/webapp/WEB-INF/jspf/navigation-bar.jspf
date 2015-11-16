@@ -16,19 +16,41 @@
             <ul class="nav navbar-nav">
                 <li><a href="<c:url value="/list.jsp"/>">Książki</a></li>
                 <li><a type="button" data-toggle="modal" data-target="#searchModal">Wyszukaj</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Panel administratora <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="/admin/adminMessages.jsp">Komunikaty administratora</a></li>
-                        <li><a href="/admin/users.jsp">Użytkownicy</a></li>
-                        <li><a href="#"></a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Oddzielone linki</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Jeszcze jeden oddzielony link</a></li>
-                    </ul>
-                </li>
+                <c:if test="${user.getIsSuperuser() eq 1}">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Panel administratora <span
+                                class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/admin/adminMessages.jsp">Komunikaty administratora</a></li>
+                            <li><a href="/admin/users.jsp">Użytkownicy</a></li>
+                            <li><a href="#"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Oddzielone linki</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Jeszcze jeden oddzielony link</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+
+                <c:if test="${user.getIsStaff() eq 1 && user.getIsSuperuser() eq 0}">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Panel pracownika <span
+                                class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/admin/adminMessages.jsp">Komunikaty administratora</a></li>
+                            <li><a href="/admin/users.jsp">Użytkownicy</a></li>
+                            <li><a href="#"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Oddzielone linki</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Jeszcze jeden oddzielony link</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Motywy <b class="caret"></b></a>
                     <ul class="dropdown-menu">
