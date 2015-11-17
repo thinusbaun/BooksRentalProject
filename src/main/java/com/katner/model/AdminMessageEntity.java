@@ -12,6 +12,7 @@ public class AdminMessageEntity {
     private int id;
     private String content;
     private Date date;
+    private AuthUserEntity user;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -63,5 +64,15 @@ public class AdminMessageEntity {
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    public AuthUserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(AuthUserEntity user) {
+        this.user = user;
     }
 }

@@ -1,6 +1,7 @@
 package com.katner;
 
 import com.katner.model.AdminMessageEntity;
+import com.katner.model.AuthUserEntity;
 import com.katner.util.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
@@ -37,9 +38,11 @@ public class AdminMessagesServlet extends HttpServlet {
         String newMessageContent = request.getParameter("newMessageContent");
         if (newMessageContent != null) {
             EntityManager em = EntityManagerHelper.getEntityManager();
+            HttpSession session = request.getSession();
             AdminMessageEntity entity = new AdminMessageEntity();
             entity.setContent(newMessageContent);
             entity.setDate(new Date(new java.util.Date().getTime()));
+            entity.setUser((AuthUserEntity) session.getAttribute("user"));
             em.getTransaction().begin();
             em.persist(entity);
             em.getTransaction().commit();
