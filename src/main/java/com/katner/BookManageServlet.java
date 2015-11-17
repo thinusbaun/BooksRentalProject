@@ -25,6 +25,7 @@ public class BookManageServlet extends HttpServlet {
         String removeBookId = request.getParameter("removeBookId");
         String removeEmptyBooks = request.getParameter("removeEmptyBooks");
         String tagToRemoveId = request.getParameter("tagToRemoveId");
+        String authorToRemoveId = request.getParameter("authorToRemoveId");
         EntityManager em = EntityManagerHelper.getEntityManager();
         if (shouldAddBook != null) {
             BookEntity book = new BookEntity();
@@ -66,6 +67,14 @@ public class BookManageServlet extends HttpServlet {
             javax.persistence.Query q = em.createQuery("delete BookTagsEntity where bookId = :bookid and tagId = :tagid")
                     .setParameter("bookid", Integer.parseInt(request.getParameter("tagToRemoveBookId")))
                     .setParameter("tagid", Integer.parseInt(tagToRemoveId));
+            q.executeUpdate();
+            em.getTransaction().commit();
+        }
+        if (tagToRemoveId != null) {
+            em.getTransaction().begin();
+            javax.persistence.Query q = em.createQuery("delete BookAuthorsEntity where bookId = :bookid and authorId = :authorid")
+                    .setParameter("bookid", Integer.parseInt(request.getParameter("authorToRemoveBookId")))
+                    .setParameter("authorid", Integer.parseInt(authorToRemoveId));
             q.executeUpdate();
             em.getTransaction().commit();
         }

@@ -59,7 +59,22 @@
                     $("span#tag-" + button.getAttribute('bookid') + "-" + button.getAttribute('tagid')).empty();
                 }
             });
-
+        }
+        function removeAuthorFromBook(button) {
+            console.log(button.getAttribute('authorid'));
+            console.log(button.getAttribute('bookid'));
+            $.ajax({
+                type: "POST",
+                url: "/bookManage",
+                data: {
+                    authorToRemoveId: button.getAttribute('author'),
+                    authorToRemoveBookId: button.getAttribute('bookid')
+                },
+                success: function () {
+                    button.remove();
+                    $("span#author-" + button.getAttribute('bookid') + "-" + button.getAttribute('authorid')).empty();
+                }
+            });
         }
     </script>
 
@@ -124,7 +139,10 @@
                             <td>
                                     <c:set var="authors" value="${book.getAuthors()}"/>
                                 <c:forEach items="${authors}" var="author">
-                                <a href="<c:url value="list.jsp?authorId=${author.getId()}"/>">${author.getName()}</a>
+                                <span id="author-${book.getId()}-${author.getId()}"><a
+                                        href="<c:url value="list.jsp?authorId=${author.getId()}"/>">${author.getName()}</a><span
+                                        bookId="${book.getId()}" authorId="${author.getId()}"
+                                        onclick="removeAuthorFromBook(this)">&times;</span></span>
                                 </c:forEach>
                             <td>
                                 <c:set var="tags" value="${book.getTags()}"></c:set>
