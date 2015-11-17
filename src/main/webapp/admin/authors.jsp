@@ -22,6 +22,18 @@
                 location.reload();
             });
         });
+
+        function removeAuthor(button) {
+            console.log(button.getAttribute('authorid'));
+            $.ajax({
+                type: "POST",
+                url: "/authorManage",
+                data: {removeAuthorId: button.getAttribute('authorid')},
+                success: function () {
+                    $("tr[authorid='" + button.getAttribute('authorid') + "']").remove();
+                }
+            });
+        }
     </script>
 
 </head>
@@ -60,14 +72,20 @@
                 <thead>
                 <tr>
                     <th>Autor</th>
-                    <th></th>
+                    <th>Ilość książek</th>
                 </tr>
                 </thead>
                 <tbody>
                 <jsp:include page="/authorManage"/>
                 <c:forEach items="${authors}" var="author">
-                    <tr>
+                    <tr authorId="${author.getId()}">
                         <td>${author.getName()}</td>
+                        <td>${author.getBooks().size()}</td>
+                        <td>
+                            <button type="button" class="btn btn-default" authorId="${author.getId()}"
+                                    onclick="removeAuthor(this)">Usuń
+                            </button>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

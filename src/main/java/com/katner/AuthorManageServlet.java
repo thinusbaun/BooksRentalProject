@@ -19,12 +19,21 @@ import java.util.List;
 public class AuthorManageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String authorNameToAdd = request.getParameter("authorNameToAdd");
+        String removeAuthorId = request.getParameter("removeAuthorId");
+        EntityManager em = EntityManagerHelper.getEntityManager();
         if (authorNameToAdd != null) {
-            EntityManager em = EntityManagerHelper.getEntityManager();
             AuthorEntity author = new AuthorEntity();
             author.setName(authorNameToAdd);
             em.getTransaction().begin();
             em.persist(author);
+            em.getTransaction().commit();
+        }
+        if (removeAuthorId != null) {
+            AuthorEntity author = em.find(AuthorEntity.class, Integer.parseInt(removeAuthorId));
+            em.getTransaction().begin();
+            javax.persistence.Query q = em.createQuery("delete BookAuthorsEntity where authorId = :authorid").setParameter("authorid", Integer.parseInt(removeAuthorId));
+            q.executeUpdate();
+            em.remove(author);
             em.getTransaction().commit();
         }
         response.setStatus(HttpServletResponse.SC_OK);
