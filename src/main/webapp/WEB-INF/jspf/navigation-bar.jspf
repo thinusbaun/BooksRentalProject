@@ -39,7 +39,8 @@
                                 class="caret"></span></a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/admin/adminMessages.jsp">Komunikaty administratora</a></li>
+                            <li><a href="/admin/authors.jsp">Administracja autorami</a></li>
+                            <li><a href="/admin/books.jsp">Administracja książkami</a></li>
                             <li><a href="/admin/users.jsp">Użytkownicy</a></li>
                             <li><a href="#"></a></li>
                             <li class="divider"></li>

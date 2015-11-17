@@ -102,6 +102,15 @@
         <url-pattern>/authorManage</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>BookManageServlet</servlet-name>
+        <servlet-class>com.katner.BookManageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookManageServlet</servlet-name>
+        <url-pattern>/bookManage</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
