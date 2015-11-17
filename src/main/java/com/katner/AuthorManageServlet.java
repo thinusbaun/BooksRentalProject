@@ -20,6 +20,7 @@ public class AuthorManageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String authorNameToAdd = request.getParameter("authorNameToAdd");
         String removeAuthorId = request.getParameter("removeAuthorId");
+        String removeEmptyAuthors = request.getParameter("removeEmptyAuthors");
         EntityManager em = EntityManagerHelper.getEntityManager();
         if (authorNameToAdd != null) {
             AuthorEntity author = new AuthorEntity();
@@ -34,6 +35,14 @@ public class AuthorManageServlet extends HttpServlet {
             javax.persistence.Query q = em.createQuery("delete BookAuthorsEntity where authorId = :authorid").setParameter("authorid", Integer.parseInt(removeAuthorId));
             q.executeUpdate();
             em.remove(author);
+            em.getTransaction().commit();
+        }
+        if (removeEmptyAuthors != null) {
+            em.getTransaction().begin();
+            List<AuthorEntity> authorsToDelete = em.createQuery("from AuthorEntity  where books.size = 0").getResultList();
+            for (AuthorEntity authorToDelete : authorsToDelete) {
+                em.remove(authorToDelete);
+            }
             em.getTransaction().commit();
         }
         response.setStatus(HttpServletResponse.SC_OK);

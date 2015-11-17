@@ -34,6 +34,16 @@
                 }
             });
         }
+        function removeEmptyAuthors() {
+            $.ajax({
+                type: "POST",
+                url: "/authorManage",
+                data: {removeEmptyAuthors: 1},
+                success: function () {
+                    location.reload();
+                }
+            });
+        }
     </script>
 
 </head>
@@ -67,6 +77,9 @@
             <h2>Autorzy</h2>
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addAuthorModal">
                 Nowy autor
+            </button>
+            <button type="button" class="btn btn-default" onclick="removeEmptyAuthors()">
+                Usuń autorów bez książek
             </button>
             <table class="table table-striped">
                 <thead>
