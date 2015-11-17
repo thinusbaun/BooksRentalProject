@@ -93,6 +93,15 @@
         <url-pattern>/searchServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AuthorManageServlet</servlet-name>
+        <servlet-class>com.katner.AuthorManageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthorManageServlet</servlet-name>
+        <url-pattern>/authorManage</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
