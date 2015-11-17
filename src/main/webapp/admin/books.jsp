@@ -47,6 +47,20 @@
                 }
             });
         }
+        function removeTagFromBook(button) {
+            console.log(button.getAttribute('tagid'));
+            console.log(button.getAttribute('bookid'));
+            $.ajax({
+                type: "POST",
+                url: "/bookManage",
+                data: {tagToRemoveId: button.getAttribute('tagid'), tagToRemoveBookId: button.getAttribute('bookid')},
+                success: function () {
+                    button.remove();
+                    $("span#tag-" + button.getAttribute('bookid') + "-" + button.getAttribute('tagid')).empty();
+                }
+            });
+
+        }
     </script>
 
 </head>
@@ -115,8 +129,12 @@
                             <td>
                                 <c:set var="tags" value="${book.getTags()}"></c:set>
                                 <c:forEach items="${tags}" var="tag">
-                                    <a href="<c:url value="list.jsp?tagId=${tag.getId()}"/>"><span
-                                            class="label label-primary">${tag.getTitle()}</span></a>
+
+                                  <span id="tag-${book.getId()}-${tag.getId()}">  <a
+                                          href="<c:url value="list.jsp?tagId=${tag.getId()}"/>"><span
+                                          class="label label-primary">${tag.getTitle()}</a></span> <span
+                                        bookId="${book.getId()}" tagId="${tag.getId()}"
+                                        onclick="removeTagFromBook(this)">&times;</span></span>
                                 </c:forEach>
                             </td>
                             <td>
