@@ -100,7 +100,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Wyszkukaj książki, autorów, isbn, tagi</h4>
             </div>
-            <form action="<c:out value="list.jsp"/>" method="get" onsubmit="addSearchEntryToCookie()">
+            <form action="<c:out value="/list.jsp"/>" method="get" onsubmit="addSearchEntryToCookie()">
                 <div class="modal-body">
                     <input type="search" name="q" id="autocomplete"/>
 

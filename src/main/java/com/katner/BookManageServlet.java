@@ -70,7 +70,7 @@ public class BookManageServlet extends HttpServlet {
             q.executeUpdate();
             em.getTransaction().commit();
         }
-        if (tagToRemoveId != null) {
+        if (authorToRemoveId != null) {
             em.getTransaction().begin();
             javax.persistence.Query q = em.createQuery("delete BookAuthorsEntity where bookId = :bookid and authorId = :authorid")
                     .setParameter("bookid", Integer.parseInt(request.getParameter("authorToRemoveBookId")))
