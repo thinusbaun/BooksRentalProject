@@ -111,6 +111,15 @@
         <url-pattern>/bookManage</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>TagManageServlet</servlet-name>
+        <servlet-class>com.katner.TagManagerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TagManageServlet</servlet-name>
+        <url-pattern>/tagManage</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
