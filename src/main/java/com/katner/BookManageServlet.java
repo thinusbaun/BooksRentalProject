@@ -1,5 +1,6 @@
 package com.katner;
 
+import com.katner.model.AuthorEntity;
 import com.katner.model.BookCopyEntity;
 import com.katner.model.BookEntity;
 import com.katner.model.RentalEntity;
@@ -26,6 +27,8 @@ public class BookManageServlet extends HttpServlet {
         String removeEmptyBooks = request.getParameter("removeEmptyBooks");
         String tagToRemoveId = request.getParameter("tagToRemoveId");
         String authorToRemoveId = request.getParameter("authorToRemoveId");
+        String addAuthorId = request.getParameter("addAuthorId");
+
         EntityManager em = EntityManagerHelper.getEntityManager();
         if (shouldAddBook != null) {
             BookEntity book = new BookEntity();
@@ -76,6 +79,17 @@ public class BookManageServlet extends HttpServlet {
                     .setParameter("bookid", Integer.parseInt(request.getParameter("authorToRemoveBookId")))
                     .setParameter("authorid", Integer.parseInt(authorToRemoveId));
             q.executeUpdate();
+            em.getTransaction().commit();
+        }
+        if (addAuthorId != null) {
+            em.getTransaction().begin();
+            AuthorEntity author = em.find(AuthorEntity.class, Integer.parseInt(addAuthorId));
+            BookEntity book = em.find(BookEntity.class, Integer.parseInt(request.getParameter("bookId")));
+            if (author != null && book != null) {
+                List<AuthorEntity> bookAuthors = book.getAuthors();
+                bookAuthors.add(author);
+                book.setAuthors(bookAuthors);
+            }
             em.getTransaction().commit();
         }
         response.setStatus(HttpServletResponse.SC_OK);

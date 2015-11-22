@@ -14,6 +14,27 @@
 
     <%@ include file="/WEB-INF/jspf/imports.jspf" %>
     <script type="text/javascript">
+        $(document).ready(function () {
+            var select = $('#selectAuthor');
+            $.ajax({
+                type: "GET",
+                url: "/authorManage",
+                data: {'json': 1},
+                success: function (data) {
+                    var opts = $.parseJSON(data);
+                    $.each(opts, function (i, d) {
+                        $('#authorSelect').append('<option value="' + d.id + '">' + d.name + '</option>');
+                    });
+                }
+            });
+        })
+
+        function showAddAuthorDialog(ob) {
+            var bookIdInput = $("#bookIdToAuthorAdd")[0];
+            bookIdInput.setAttribute('value', ob.getAttribute('bookId'));
+            $('#addAuthorModal').modal('show');
+        }
+
         $(function () {
             $("button#submit").click(function (event) {
                 event.preventDefault();
@@ -21,8 +42,24 @@
                     type: "POST",
                     url: "/bookManage",
                     data: $('form#newBookForm').serialize()
+                }).success(function () {
+                    location.reload();
                 });
-                location.reload();
+
+            });
+        });
+
+        $(function () {
+            $("button#submitAuthor").click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/bookManage",
+                    data: $('form#addAuthorForm').serialize()
+                }).success(function () {
+                    location.reload();
+                });
+
             });
         });
 
@@ -144,6 +181,8 @@
                                         bookId="${book.getId()}" authorId="${author.getId()}"
                                         onclick="removeAuthorFromBook(this)">&times;</span></span>
                                 </c:forEach>
+                                        <span class="label label-success" onclick="showAddAuthorDialog(this)"
+                                              bookId="${book.getId()}">+</span>
                             <td>
                                 <c:set var="tags" value="${book.getTags()}"></c:set>
                                 <c:forEach items="${tags}" var="tag">
@@ -154,6 +193,7 @@
                                         bookId="${book.getId()}" tagId="${tag.getId()}"
                                         onclick="removeTagFromBook(this)">&times;</span></span>
                                 </c:forEach>
+                                <span class="label label-success">+</span>
                             </td>
                             <td>
                                 <%
@@ -183,6 +223,29 @@
             </table>
         </div>
         <%--</c:if>--%>
+    </div>
+</div>
+
+<div id="addAuthorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dodaj autora</h4>
+            </div>
+            <form id="addAuthorForm" method="post">
+                <input type="text" class="hidden" name="bookId" id="bookIdToAuthorAdd"/>
+                <select id="authorSelect" name="addAuthorId"></select>
+
+                <div class="modal-body">
+                    <input type="submit" value="wartość"/>
+                    <button class="btn btn-success btn-xs" id="submitAuthor">Dodaj</button>
+
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 </body>

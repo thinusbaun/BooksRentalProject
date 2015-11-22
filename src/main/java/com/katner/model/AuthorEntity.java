@@ -1,5 +1,6 @@
 package com.katner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.search.annotations.Field;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.List;
 public class AuthorEntity {
     private int id;
     private String name;
+    @JsonIgnore
     private List<BookEntity> books;
 
     @Id
@@ -65,3 +67,4 @@ public class AuthorEntity {
         this.books = books;
     }
 }
+
