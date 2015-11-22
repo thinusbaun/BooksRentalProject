@@ -1,9 +1,6 @@
 package com.katner;
 
-import com.katner.model.AuthorEntity;
-import com.katner.model.BookCopyEntity;
-import com.katner.model.BookEntity;
-import com.katner.model.RentalEntity;
+import com.katner.model.*;
 import com.katner.util.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
@@ -28,6 +25,7 @@ public class BookManageServlet extends HttpServlet {
         String tagToRemoveId = request.getParameter("tagToRemoveId");
         String authorToRemoveId = request.getParameter("authorToRemoveId");
         String addAuthorId = request.getParameter("addAuthorId");
+        String addTagId = request.getParameter("addTagId");
 
         EntityManager em = EntityManagerHelper.getEntityManager();
         if (shouldAddBook != null) {
@@ -89,6 +87,17 @@ public class BookManageServlet extends HttpServlet {
                 List<AuthorEntity> bookAuthors = book.getAuthors();
                 bookAuthors.add(author);
                 book.setAuthors(bookAuthors);
+            }
+            em.getTransaction().commit();
+        }
+        if (addTagId != null) {
+            em.getTransaction().begin();
+            TagEntity tag = em.find(TagEntity.class, Integer.parseInt(addTagId));
+            BookEntity book = em.find(BookEntity.class, Integer.parseInt(request.getParameter("bookId")));
+            if (tag != null && book != null) {
+                List<TagEntity> bookTags = book.getTags();
+                bookTags.add(tag);
+                book.setTags(bookTags);
             }
             em.getTransaction().commit();
         }

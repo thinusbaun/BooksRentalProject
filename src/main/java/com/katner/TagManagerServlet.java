@@ -1,5 +1,6 @@
 package com.katner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.katner.model.TagEntity;
 import com.katner.util.EntityManagerHelper;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -52,6 +54,14 @@ public class TagManagerServlet extends HttpServlet {
         EntityManager em = EntityManagerHelper.getEntityManager();
         List<TagEntity> tags;
         tags = em.createQuery("from TagEntity").getResultList();
-        request.setAttribute("tags", tags);
+        String shouldSendJson = request.getParameter("json");
+        if (shouldSendJson != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonInString = mapper.writeValueAsString(tags);
+            PrintWriter out = response.getWriter();
+            out.print(jsonInString);
+        } else {
+            request.setAttribute("tags", tags);
+        }
     }
 }

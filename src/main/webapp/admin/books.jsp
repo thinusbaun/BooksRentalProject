@@ -15,7 +15,6 @@
     <%@ include file="/WEB-INF/jspf/imports.jspf" %>
     <script type="text/javascript">
         $(document).ready(function () {
-            var select = $('#selectAuthor');
             $.ajax({
                 type: "GET",
                 url: "/authorManage",
@@ -29,10 +28,30 @@
             });
         })
 
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/tagManage",
+                data: {'json': 1},
+                success: function (data) {
+                    var opts = $.parseJSON(data);
+                    $.each(opts, function (i, d) {
+                        $('#tagSelect').append('<option value="' + d.id + '">' + d.title + '</option>');
+                    });
+                }
+            });
+        })
+
         function showAddAuthorDialog(ob) {
             var bookIdInput = $("#bookIdToAuthorAdd")[0];
             bookIdInput.setAttribute('value', ob.getAttribute('bookId'));
             $('#addAuthorModal').modal('show');
+        }
+
+        function showAddTagDialog(ob) {
+            var bookIdInput = $("#bookIdToTagAdd")[0];
+            bookIdInput.setAttribute('value', ob.getAttribute('bookId'));
+            $('#addTagModal').modal('show');
         }
 
         $(function () {
@@ -56,6 +75,20 @@
                     type: "POST",
                     url: "/bookManage",
                     data: $('form#addAuthorForm').serialize()
+                }).success(function () {
+                    location.reload();
+                });
+
+            });
+        });
+
+        $(function () {
+            $("button#submitTag").click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/bookManage",
+                    data: $('form#addTagForm').serialize()
                 }).success(function () {
                     location.reload();
                 });
@@ -193,7 +226,8 @@
                                         bookId="${book.getId()}" tagId="${tag.getId()}"
                                         onclick="removeTagFromBook(this)">&times;</span></span>
                                 </c:forEach>
-                                <span class="label label-success">+</span>
+                                <span class="label label-success" onclick="showAddTagDialog(this)"
+                                      bookId="${book.getId()}">+</span>
                             </td>
                             <td>
                                 <%
@@ -240,8 +274,29 @@
                 <select id="authorSelect" name="addAuthorId"></select>
 
                 <div class="modal-body">
-                    <input type="submit" value="wartość"/>
                     <button class="btn btn-success btn-xs" id="submitAuthor">Dodaj</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="addTagModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dodaj tag</h4>
+            </div>
+            <form id="addTagForm" method="post">
+                <input type="text" class="hidden" name="bookId" id="bookIdToTagAdd"/>
+                <select id="tagSelect" name="addTagId"></select>
+
+                <div class="modal-body">
+                    <button class="btn btn-success btn-xs" id="submitTag">Dodaj</button>
 
                 </div>
             </form>
