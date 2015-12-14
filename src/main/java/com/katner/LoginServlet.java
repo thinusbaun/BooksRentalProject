@@ -28,6 +28,13 @@ public class LoginServlet extends HttpServlet {
                 .setParameter("username", request.getParameter("login")).getResultList();
         if (results.size() != 0) {
             AuthUserEntity userEntity = (AuthUserEntity) results.get(0);
+            if (userEntity.getIsActive() != 1)
+            {
+                session.setAttribute("message", "Użytkownik nie jest aktywny. Poczekaj aż pracownik/administrator aktywuje twoje konto.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
             if (Hasher.checkPassword(request.getParameter("haslo"), userEntity.getPassword())) {
                 session.setAttribute("imie", userEntity.getFirstName());
                 session.setAttribute("login", userEntity.getUsername());

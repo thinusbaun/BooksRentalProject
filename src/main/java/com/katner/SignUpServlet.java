@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,14 +36,6 @@ public class SignUpServlet extends HttpServlet {
             entityManager.persist(userEntity);
             entityManager.getTransaction().commit();
             entityManager.close();
-            Cookie cookie = new Cookie("imie", request.getParameter("imie"));
-            cookie.setPath("/");
-            cookie.setMaxAge(9000);
-            response.addCookie(cookie);
-            cookie = new Cookie("login", request.getParameter("login"));
-            cookie.setPath("/");
-            cookie.setMaxAge(9000);
-            response.addCookie(cookie);
             response.sendRedirect("/");
         } else {
             request.setAttribute("signupsuccessfull", false);

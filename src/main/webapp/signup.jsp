@@ -17,7 +17,7 @@
     <%@include file="WEB-INF/jspf/admin-messages.jspf" %>
     <div class="container">
         <div class="jumbotron">
-            <form id="signupform" method="post" class="form-horizontal">
+            <form id="signupform" method="post" class="form-horizontal" accept-charset="UTF-8">
                 <div class="form-group has-feedback">
                     <label for="imieInput" class="control-label col-md-2">Imię</label>
 

@@ -19,7 +19,8 @@
             <ul>
                 <c:forEach items="${newBooks}" var="book">
                     <li>
-                        <a href="<c:url value="/bookRent?bookId=${book.getId()}"></c:url>">${book.getTitle()}</a> dodane
+                        <a href="<c:url value="/rentBook.jsp?bookId=${book.getId()}"></c:url>">${book.getTitle()}</a>
+                        dodane
                         <fmt:formatDate value="${book.getAddedDate()}" pattern="dd-MM-yyyy"/>
                     </li>
                 </c:forEach>
